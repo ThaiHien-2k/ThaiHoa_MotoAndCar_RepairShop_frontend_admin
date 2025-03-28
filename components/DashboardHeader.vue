@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onBeforeMount, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import { useI18n } from 'vue-i18n'
+const { locales, setLocale } = useI18n()
 
 const { logout, user } = useAuth()
 const { t, locale } = useI18n()
 const router = useRouter()
+
 const dropdownOpen = ref(false)
 const isDarkMode = ref(false)
 const notificationOpen = ref(false)
@@ -16,12 +18,19 @@ const notifications = ref([
   { id: 3, message: 'Reminder: Scheduled maintenance' }
 ])
 
-onMounted(() => {
-  if (process.client) {
+const initializeSettings = () => {
+  if (typeof window !== 'undefined') {
     isDarkMode.value = localStorage.getItem('darkMode') === 'true'
     document.documentElement.classList.toggle('dark', isDarkMode.value)
+
+    const savedLocale = localStorage.getItem('locale') as "en" | "vi"
+    if (savedLocale === "en" || savedLocale === "vi") {
+      locale.value = savedLocale
+    }
   }
-})
+}
+
+onBeforeMount(initializeSettings)
 
 const handleLogout = async () => {
   await logout()
@@ -30,40 +39,51 @@ const handleLogout = async () => {
 
 const toggleDarkMode = () => {
   isDarkMode.value = !isDarkMode.value
-  if (process.client) {
-    localStorage.setItem('darkMode', isDarkMode.value.toString())
-  }
+  localStorage.setItem('darkMode', isDarkMode.value.toString())
   document.documentElement.classList.toggle('dark', isDarkMode.value)
 }
 
-const toggleLocale = () => {
-  locale.value = locale.value === 'en' ? 'vi' : 'en'
+const toggleLocale = async () => {
+  const newLocale = locale.value === 'en' ? 'vi' : 'en'
+  locale.value = newLocale
+  localStorage.setItem('locale', newLocale)
+  await setLocale(newLocale)
+  await nextTick()
 }
+
+const closeDropdown = (event: Event) => {
+  const target = event.target as HTMLElement
+  if (!target.closest('.dropdown-container')) {
+    dropdownOpen.value = false
+    notificationOpen.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', closeDropdown)
+})
 </script>
 
 <template>
-  <header 
-    class="h-16 px-4 bg-gray-800 dark:bg-gray-900 text-white shadow-md transition-colors duration-300 flex justify-between items-center border-b border-gray-700">
+  <header class="h-16 px-4 bg-gray-800 dark:bg-gray-900 text-white shadow-md flex justify-between items-center border-b border-gray-700">
     <h1 class="text-lg font-semibold tracking-wide">{{ t('admin_panel') }}</h1>
+    
     <div class="relative flex items-center space-x-3">
-      <!-- Dark Mode Toggle -->
       <button @click="toggleDarkMode" class="p-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition">
         <span v-if="isDarkMode">🌙</span>
         <span v-else>☀️</span>
       </button>
 
-      <!-- Language Selector -->
       <button @click="toggleLocale" class="p-2 rounded-lg bg-gray-700 border border-gray-600 hover:bg-gray-600 transition">
-        <img v-if="locale === 'en'" src="../public/uk.svg" alt="English" class="w-5 h-5" />
-        <img v-else src="../public/vn.svg" alt="Tiếng Việt" class="w-5 h-5" />
+        <img v-if="locale === 'en'" src="@/assets/uk.svg" alt="English" class="w-5 h-5" loading="lazy" />
+        <img v-else src="@/assets/vn.svg" alt="Tiếng Việt" class="w-5 h-5" loading="lazy" />
       </button>
 
-      <!-- Notifications -->
-      <div class="relative">
+      <div class="relative dropdown-container">
         <button @click="notificationOpen = !notificationOpen" class="p-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition">
           🔔
         </button>
-        <div v-if="notificationOpen" class="absolute right-0 mt-2 w-64 bg-gray-800 text-white rounded-lg shadow-lg border border-gray-700 text-sm">
+        <div v-if="notificationOpen" class="absolute right-0 mt-2 w-64 bg-gray-800 text-white rounded-lg shadow-lg border border-gray-700 text-sm z-50">
           <ul>
             <li v-for="notification in notifications" :key="notification.id" class="px-4 py-2 border-b border-gray-700">{{ notification.message }}</li>
             <li v-if="notifications.length === 0" class="px-4 py-2 text-center">{{ t('no_notifications') }}</li>
@@ -71,16 +91,15 @@ const toggleLocale = () => {
         </div>
       </div>
 
-      <!-- User Dropdown -->
-      <div class="relative">
-        <button @click="dropdownOpen = !dropdownOpen" class="p-2 rounded-full  hover:bg-gray-600 transition">
+      <div class="relative dropdown-container">
+        <button @click="dropdownOpen = !dropdownOpen" class="p-2 rounded-full hover:bg-gray-600 transition">
           <img v-if="user?.avatar" :src="user.avatar" alt="Avatar" class="w-8 h-8 rounded-full object-cover" />
           <div v-else class="w-8 h-8 flex items-center justify-center bg-gray-600 text-white rounded-full text-sm">
             👤
           </div>
         </button>
 
-        <div v-if="dropdownOpen" class="absolute right-0 mt-2 w-48 bg-gray-800 text-white rounded-lg shadow-lg border border-gray-700 text-sm">
+        <div v-if="dropdownOpen" class="absolute right-0 mt-2 w-48 bg-gray-800 text-white rounded-lg shadow-lg border border-gray-700 text-sm z-50">
           <ul>
             <li class="px-4 py-2 font-medium border-b border-gray-700">{{ user?.name || t('admin') }}</li>
             <li>
@@ -99,7 +118,7 @@ const toggleLocale = () => {
   </header>
 </template>
 
-<style>
+<style scoped>
 html.dark {
   background-color: #1a202c;
   color: white;

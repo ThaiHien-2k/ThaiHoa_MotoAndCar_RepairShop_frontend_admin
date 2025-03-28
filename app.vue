@@ -1,9 +1,8 @@
 <template>
   <div>
-
-    <main>
-      <NuxtPage />
-    </main>
+    <NuxtLayout>  
+    <NuxtPage />
+  </NuxtLayout>
   </div>
 </template>
 
@@ -14,7 +13,7 @@ const router = useRouter()
 
 onMounted(() => {
   if (window.location.pathname === '/') {
-    router.push('/admin/dashboard')
+    router.push('/dashboard')
   }
 })
 const { user, logout } = useAuth()

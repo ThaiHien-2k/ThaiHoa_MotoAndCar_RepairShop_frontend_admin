@@ -15,6 +15,7 @@ export default <Config>{
     './*.{vue,js,ts,jsx,tsx}',
     './nuxt.config.ts'
   ],
+  darkMode: "class",
   theme: {
     extend: {},
   },

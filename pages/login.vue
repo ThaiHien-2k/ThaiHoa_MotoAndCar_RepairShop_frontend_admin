@@ -13,7 +13,7 @@ const handleLogin = async () => {
     await login(email.value, password.value)
 
     if (isAuthenticated.value) {
-      router.push('/admin/dashboard')
+      router.push('/dashboard')
     } else {
       errorMessage.value = 'Invalid credentials. Please try again.'
     }

@@ -1,8 +1,34 @@
 {
+  "admin_panel": "Admin Panel",
+  "logout": "Logout",
+  "profile": "Profile",
+  "settings": "Settings",
+  "admin": "Admin",
+  "sidebar": {
     "admin_panel": "Admin Panel",
-    "logout": "Logout",
-    "profile": "Profile",
-    "settings": "Settings",
-    "admin": "Admin"
+    "dashboard": "Dashboard",
+    "accounts_customers": "Accounts & Customers",
+    "accounts": "Accounts",
+    "customers": "Customers",
+    "orders_history": "Orders & History",
+    "orders": "Orders",
+    "purchase_history": "Purchase History",
+    "repair_history": "Repair History",
+    "products_inventory": "Products & Inventory",
+    "product_list": "Product List",
+    "product_comments": "Product Comments",
+    "inventory": "Inventory",
+    "services_appointments": "Services & Appointments",
+    "service_list": "Service List",
+    "repair_appointments": "Repair Appointments",
+    "employees_suppliers": "Employees & Suppliers",
+    "employees": "Employees",
+    "suppliers": "Suppliers",
+    "blog_posts": "Blog Posts",
+    "blog_comments": "Blog Comments",
+    "promotions_categories": "Promotions & Categories",
+    "promotions": "Promotions",
+    "categories": "Categories",
+    "blog": "Blog"
   }
-  
+}

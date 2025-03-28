@@ -1,8 +1,34 @@
 {
-    "admin_panel": "Bảng Quản Trị",
-    "logout": "Đăng xuất",
-    "profile": "Hồ sơ",
-    "settings": "Cài đặt",
-    "admin": "Quản trị viên"
+  "admin_panel": "Bảng điều khiển",
+  "logout": "Đăng xuất",
+  "profile": "Hồ sơ",
+  "settings": "Cài đặt",
+  "admin": "Quản trị",
+  "sidebar": {
+    "admin_panel": "Bảng điều khiển",
+    "dashboard": "Trang chủ",
+    "accounts_customers": "Tài khoản & Khách hàng",
+    "accounts": "Tài khoản",
+    "customers": "Khách hàng",
+    "orders_history": "Đơn hàng & Lịch sử",
+    "orders": "Đơn hàng",
+    "purchase_history": "Lịch sử mua hàng",
+    "repair_history": "Lịch sử sửa chữa",
+    "products_inventory": "Sản phẩm & Kho hàng",
+    "product_list": "Danh sách sản phẩm",
+    "product_comments": "Bình luận sản phẩm",
+    "inventory": "Tồn kho",
+    "services_appointments": "Dịch vụ & Lịch hẹn",
+    "service_list": "Danh sách dịch vụ",
+    "repair_appointments": "Lịch hẹn sửa chữa",
+    "employees_suppliers": "Nhân viên & Nhà cung cấp",
+    "employees": "Nhân viên",
+    "suppliers": "Nhà cung cấp",
+    "blog_posts": "Bài viết",
+    "blog_comments": "Bình luận blog",
+    "promotions_categories": "Khuyến mãi & Danh mục",
+    "promotions": "Khuyến mãi",
+    "categories": "Danh mục",
+    "blog": "Blog"
   }
-  
+}

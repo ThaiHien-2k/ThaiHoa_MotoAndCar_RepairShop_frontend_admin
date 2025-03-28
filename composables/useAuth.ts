@@ -1,14 +1,29 @@
 import { useStorage } from '@vueuse/core'
 
 interface AuthResponse {
+  message: string
   token: string
-  name: Record<string, any>
+  user: {
+    id: string
+    name: string
+    email: string
+    privilege: string
+  }
 }
 
 export const useAuth = () => {
-  const token = useStorage<string | null>('access_token', null)
-  const user = useStorage<Record<string, any> | null>('user', null)
+  const isClient = typeof window !== 'undefined' // Kiểm tra nếu đang chạy trên client
+  const token = useStorage<string | null>('access_token', isClient ? localStorage.getItem('access_token') : null)
+  const user = useStorage<string | null>('user', isClient ? localStorage.getItem('user') : null)
+
   const config = useRuntimeConfig()
+
+  onMounted(() => {
+    if (isClient) {
+      token.value = localStorage.getItem('access_token')
+      user.value = localStorage.getItem('user')
+    }
+  })
 
   const login = async (email: string, password: string) => {
     try {
@@ -17,11 +32,16 @@ export const useAuth = () => {
         body: { email, password },
       })
 
-      if (error.value) throw new Error('Login failed! Please check your credentials.')
+      if (error.value) throw new Error(error.value.message || 'Login failed!')
 
       if (data.value) {
         token.value = data.value.token
-        user.value = data.value.name
+        user.value = JSON.stringify(data.value.user)
+
+        if (isClient) {
+          localStorage.setItem('access_token', data.value.token)
+          localStorage.setItem('user', JSON.stringify(data.value.user))
+        }
       }
     } catch (err) {
       console.error('Login Error:', err)
@@ -38,10 +58,24 @@ export const useAuth = () => {
     } finally {
       token.value = null
       user.value = null
+
+      if (isClient) {
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('user')
+      }
     }
   }
 
+  const parsedUser = computed(() => {
+    try {
+      return user.value ? JSON.parse(user.value) : null
+    } catch (e) {
+      console.error('Failed to parse user data', e)
+      return null
+    }
+  })
+
   const isAuthenticated = computed(() => !!token.value)
 
-  return { token, user, login, logout, isAuthenticated }
+  return { token, user: parsedUser, login, logout, isAuthenticated }
 }

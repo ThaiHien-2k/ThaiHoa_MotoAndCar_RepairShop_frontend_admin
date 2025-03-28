@@ -5,15 +5,16 @@ definePageMeta({
 })
 
 const { user } = useAuth()
+
 </script>
 
 <template>
   <div>
-    <AdminHeader />
+    <DashboardHeader />
     <main class="p-8">
       <h1 class="text-3xl font-semibold">Welcome, {{ user?.name }}</h1>
       <p class="mt-4">This is your admin dashboard.</p>
     </main>
-    <NuxtLayout />
+    <DashboardFooter />
   </div>
 </template>

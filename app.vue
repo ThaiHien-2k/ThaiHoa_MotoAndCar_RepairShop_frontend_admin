@@ -8,6 +8,15 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+onMounted(() => {
+  if (window.location.pathname === '/') {
+    router.push('/admin/dashboard')
+  }
+})
 const { user, logout } = useAuth()
 
 const handleLogout = () => {

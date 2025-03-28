@@ -1,9 +1,14 @@
 import { useAuth } from '~/composables/useAuth'
 
-export default defineNuxtRouteMiddleware((to) => {
-  const { isAuthenticated } = useAuth()
+export default defineNuxtRouteMiddleware((to, from) => {
+  if (process.server) return 
+  const token = localStorage.getItem('access_token')
 
-  if (!isAuthenticated.value && to.path !== '/login') {
+  if (to.path === '/') {
+    return navigateTo('/admin/dashboard')
+  }
+
+  if (!token) {
     return navigateTo('/login')
   }
 })

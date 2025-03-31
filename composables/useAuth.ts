@@ -12,7 +12,7 @@ interface AuthResponse {
 }
 
 export const useAuth = () => {
-  const isClient = typeof window !== 'undefined' // Kiểm tra nếu đang chạy trên client
+  const isClient = typeof window !== 'undefined'
   const token = useStorage<string | null>('access_token', isClient ? localStorage.getItem('access_token') : null)
   const user = useStorage<string | null>('user', isClient ? localStorage.getItem('user') : null)
 

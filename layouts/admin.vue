@@ -14,14 +14,14 @@
       <div class="flex flex-1 overflow-hidden">
         <AdminSidebar class="relative z-10" />
 
-        <div class="flex-1 p-8 relative z-20 bg-gray-100 dark:bg-gray-900 overflow-auto">
-          <slot />
+        <div class="flex-1 p-8 relative z-20 bg-gray-100 dark:bg-gray-900 overflow-auto mt-0 pt-0">
+          <NuxtPage />
         </div>
       </div>
 
-      <div class="relative z-10">
+      <!-- <div class="relative z-10 h-1">
         <DashboardFooter />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

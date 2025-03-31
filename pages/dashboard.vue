@@ -7,5 +7,5 @@ const { user } = useAuth()
 </script>
 
 <template>
-
+<DashboardOverview />
 </template>

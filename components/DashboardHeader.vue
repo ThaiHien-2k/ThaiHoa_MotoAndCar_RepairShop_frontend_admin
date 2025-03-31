@@ -45,12 +45,11 @@ const toggleDarkMode = () => {
 
 const toggleLocale = async () => {
   const newLocale = locale.value === 'en' ? 'vi' : 'en'
-  locale.value = newLocale
-  localStorage.setItem('locale', newLocale)
   await setLocale(newLocale)
+  locale.value = newLocale 
+  localStorage.setItem('locale', newLocale)
   await nextTick()
 }
-
 const closeDropdown = (event: Event) => {
   const target = event.target as HTMLElement
   if (!target.closest('.dropdown-container')) {

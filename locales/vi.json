@@ -30,5 +30,21 @@
     "promotions": "Khuyến mãi",
     "categories": "Danh mục",
     "blog": "Blog"
+  },
+  "dashboard": {
+    "revenue": "Doanh thu",
+    "orders": "Đơn hàng",
+    "customers": "Khách hàng",
+    "products": "Sản phẩm",
+    "recentOrders": "Đơn hàng gần đây",
+    "total": "Tổng tiền",
+    "statusName": "Trạng thái",
+    "popularServices": "Dịch vụ phổ biến",
+    "salesExpenses": "Doanh thu & Chi phí",
+    "status": {
+    "completed": "Hoàn thành",
+    "pending": "Chờ xử lý",
+    "cancelled": "Đã hủy"
+  }
   }
 }

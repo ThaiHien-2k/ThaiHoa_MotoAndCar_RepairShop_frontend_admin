@@ -30,5 +30,21 @@
     "promotions": "Promotions",
     "categories": "Categories",
     "blog": "Blog"
+  },
+  "dashboard": {
+    "revenue": "Revenue",
+    "orders": "Orders",
+    "customers": "Customers",
+    "products": "Products",
+    "recentOrders": "Recent Orders",
+    "total": "Total",
+    "statusName": "Status",
+    "popularServices": "Popular Services",
+    "salesExpenses": "Sales & Expenses",
+    "status": {
+      "completed": "Completed",
+      "pending": "Pending",
+      "cancelled": "Cancelled"
+    }
   }
 }

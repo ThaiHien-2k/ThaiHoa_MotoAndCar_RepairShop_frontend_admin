@@ -92,6 +92,33 @@
     "save": "Save",
     "updateSuccess": "Account updated successfully!",
     "updateFail": "Failed to update account.",
-    "updateFailRetry": "Failed to update account. Please try again."
-  }
+    "updateFailRetry": "Failed to update account. Please try again.",
+    "phone": "Phone",
+    "address": "Address"
+  },
+    "customers": {
+      "manageCustomers": "Manage Customers",
+      "createCustomer": "Create Customer",
+      "filterByType": "Filter by Type",
+      "filterByNameOrEmail": "Filter by Name or Email",
+      "enterNameOrEmail": "Enter name or email",
+      "all": "All",
+      "individual": "Individual",
+      "business": "Business",
+      "id": "ID",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "type": "Type",
+      "address": "Address",
+      "actions": "Actions",
+      "view": "View",
+      "delete": "Delete",
+      "confirmDelete": "Confirm Delete",
+      "confirmDeleteMessage": "Are you sure you want to delete customer {name}?",
+      "cancel": "Cancel",
+      "reset": "Reset",
+      "deleteSuccess": "Customer deleted successfully!",
+      "deleteFail": "Failed to delete the customer."
+    }
 }

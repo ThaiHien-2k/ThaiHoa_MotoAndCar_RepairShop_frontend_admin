@@ -92,6 +92,33 @@
     "save": "Lưu",
     "updateSuccess": "Cập nhật tài khoản thành công!",
     "updateFail": "Cập nhật tài khoản thất bại.",
-    "updateFailRetry": "Cập nhật tài khoản thất bại. Vui lòng thử lại."
+    "updateFailRetry": "Cập nhật tài khoản thất bại. Vui lòng thử lại.",
+    "phone": "Số điện thoại",
+    "address": "Địa chỉ"
+  },
+  "customers": {
+    "manageCustomers": "Quản lý khách hàng",
+    "createCustomer": "Tạo khách hàng",
+    "filterByType": "Lọc theo loại",
+    "filterByNameOrEmail": "Lọc theo tên hoặc email",
+    "enterNameOrEmail": "Nhập tên hoặc email",
+    "all": "Tất cả",
+    "individual": "Cá nhân",
+    "business": "Doanh nghiệp",
+    "id": "ID",
+    "name": "Tên",
+    "email": "Email",
+    "phone": "Số điện thoại",
+    "type": "Loại",
+    "address": "Địa chỉ",
+    "actions": "Hành động",
+    "view": "Xem",
+    "delete": "Xóa",
+    "confirmDelete": "Xác nhận xóa",
+    "confirmDeleteMessage": "Bạn có chắc chắn muốn xóa khách hàng {name}?",
+    "cancel": "Hủy",
+    "reset": "Đặt lại",
+    "deleteSuccess": "Xóa khách hàng thành công!",
+    "deleteFail": "Xóa khách hàng thất bại."
   }
 }

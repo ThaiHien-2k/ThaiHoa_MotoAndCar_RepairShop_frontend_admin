@@ -32,6 +32,11 @@
         </div>
 
         <div>
+          <label class="block text-gray-700 dark:text-white font-medium">{{ t('accounts.phone') }}</label>
+          <input v-model="formData.phone" type="text" required class="input-field" />
+        </div>
+
+        <div>
           <label class="block text-gray-700 dark:text-white font-medium">{{ t('accounts.privilege') }}</label>
           <select v-model="formData.privilege" class="input-field" @change="updateRoleDescription">
             <option value="2">{{ t('accounts.user') }}</option>
@@ -40,13 +45,18 @@
           </select>
         </div>
 
-        <div class="md:col-span-2">
+        <div >
           <label class="block text-gray-700 dark:text-white font-medium">{{ t('accounts.roleDescription') }}</label>
           <select v-model="formData.role_description" class="input-field">
             <option v-for="desc in roleOptions[formData.privilege]" :key="desc" :value="desc">
               {{ desc }}
             </option>
           </select>
+        </div>
+
+        <div class="md:col-span-2">
+          <label class="block text-gray-700 dark:text-white font-medium">{{ t('accounts.address') }}</label>
+          <textarea v-model="formData.address" required class="input-field"></textarea>
         </div>
 
         <div class="md:col-span-2 text-center">
@@ -84,6 +94,8 @@ const formData = ref({
   name: '',
   email: '',
   password: '',
+  phone: '', // Added phone field
+  address: '', // Added address field
   privilege: '2',
   role_description: roleOptions.value['2'][0],
   is_active: true,

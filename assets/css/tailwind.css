@@ -1,3 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.notification {
+    position: absolute; 
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%; 
+    height: auto;
+    z-index: 15; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  }
+  
+  .notification.success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border-left: 6px solid #059669;
+  }
+  
+  .notification.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-left: 6px solid #dc2626;
+  }
+  
+  @keyframes fadeInOut {
+    0%, 100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    10%, 90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+  

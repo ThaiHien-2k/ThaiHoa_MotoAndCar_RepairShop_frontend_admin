@@ -1,11 +1,15 @@
 <template>
-  <div class="p-6 max-w-4xl mx-auto">
-    <h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Chi tiết tài khoản</h1>
+  <div class="p-6 relative">
+    <div class="relative">
+      <h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Chi tiết tài khoản</h1>
 
-    <div v-if="notification.visible" 
-         :class="notification.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'" 
-         class="p-4 mb-4 rounded-lg">
-      {{ notification.message }}
+      <div
+        v-if="notificationStore.visible"
+        :class="notificationStore.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
+        class="notification"
+      >
+        {{ notificationStore.message }}
+      </div>
     </div>
 
     <div v-if="isLoading" class="text-center text-gray-600 dark:text-gray-400">Đang tải...</div>
@@ -47,10 +51,12 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import useNotification from '@/composables/useNotification'
+import { useNotificationStore } from '@/stores/notificationStore'
 import useAccount from '@/composables/useAccount'
 
-const { notification, showNotification, setNotificationForNextPage } = useNotification()
+definePageMeta({ layout: 'admin' })
+
+const notificationStore = useNotificationStore()
 const { selectedAccount, isLoading, fetchAccountById, updateAccount } = useAccount()
 
 const route = useRoute()
@@ -69,29 +75,27 @@ onMounted(() => {
 })
 
 watch(selectedAccount, (newVal) => {
-  accountData.value._id = newVal._id
-  accountData.value.name = newVal.name
-  accountData.value.email = newVal.email
-  accountData.value.privilege = newVal.privilege
-  accountData.value.is_active = newVal.is_active
+  if (newVal) {
+    accountData.value = { ...newVal }
+  }
 })
 
 const navigateToAccounts = () => {
   router.push('/accounts')
 }
-definePageMeta({ layout: 'admin' })
+
 const updateAccountHandler = async () => {
   try {
     const result = await updateAccount(accountData.value._id, accountData.value)
 
     if (result.success) {
-      setNotificationForNextPage('Cập nhật tài khoản thành công!', 'success')
+      notificationStore.showNotification('Cập nhật tài khoản thành công!', 'success')
       navigateToAccounts()
     } else {
       throw new Error(result.message || 'Cập nhật tài khoản thất bại.')
     }
   } catch (error) {
-    showNotification('Cập nhật tài khoản thất bại. Vui lòng thử lại.', 'error')
+    notificationStore.showNotification('Cập nhật tài khoản thất bại. Vui lòng thử lại.', 'error')
     console.error('Error updating account:', error)
   }
 }

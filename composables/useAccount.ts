@@ -76,21 +76,63 @@ export default function useAccount() {
     }
   };
   
-  
+  const createAccount = async (data: object) => {
+    try {
+      const response = await fetch(`${API_URL}/accounts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}` 
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to create account.');
+      }
+
+      const createdData = await response.json();
+      await fetchAccounts(); // Refetch the account list after creating a new account
+
+      return { success: true, data: createdData };
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error creating account:', error.message);
+        return { success: false, message: error.message };
+      } else {
+        console.error('Unknown error:', error);
+        return { success: false, message: 'An unknown error occurred.' };
+      }
+    }
+  };
 
   const deleteAccount = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this account?')) return
+
     try {
-      const response = await fetch(`${API_URL}/accounts/${id}`, { 
+      const response = await fetch(`${API_URL}/accounts/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${getToken()}` }
-      })
-      if (!response.ok) throw new Error('Failed to delete account.')
-      await fetchAccounts()
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to delete account.');
+      }
+
+      await fetchAccounts(); // Refetch the account list after deletion
+
+      return { success: true, message: 'Account deleted successfully.' };
     } catch (error) {
-      console.error('Error deleting account:', error)
+      if (error instanceof Error) {
+        console.error('Error deleting account:', error.message);
+        return { success: false, message: error.message };
+      } else {
+        console.error('Unknown error:', error);
+        return { success: false, message: 'An unknown error occurred.' };
+      }
     }
-  }
+  };
 
   const toggleAccountStatus = async (id: string, currentStatus: string) => {
     try {
@@ -136,6 +178,7 @@ export default function useAccount() {
     updateAccount,
     deleteAccount,
     toggleAccountStatus,
-    updateAccountPrivilege
+    updateAccountPrivilege,
+    createAccount
   }
 }

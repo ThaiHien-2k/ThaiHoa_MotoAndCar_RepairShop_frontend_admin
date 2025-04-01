@@ -46,5 +46,34 @@
     "pending": "Chờ xử lý",
     "cancelled": "Đã hủy"
   }
+  },
+  "accounts": {
+    "manageAccounts": "Quản lý tài khoản",
+    "createAccount": "Tạo tài khoản mới",
+    "filterByPrivilege": "Lọc theo quyền",
+    "filterByStatus": "Lọc theo trạng thái",
+    "filterByNameOrEmail": "Lọc theo tên hoặc email",
+    "enterNameOrEmail": "Nhập tên hoặc email",
+    "all": "Tất cả",
+    "admin": "Admin",
+    "manager": "Quản lý",
+    "user": "Người dùng",
+    "active": "Hoạt động",
+    "inactive": "Ngừng hoạt động",
+    "reset": "Đặt lại",
+    "id": "ID",
+    "name": "Tên",
+    "email": "Email",
+    "privilege": "Quyền",
+    "roleDescription": "Phân loại quyền",
+    "status": "Trạng thái",
+    "actions": "Hành động",
+    "view": "Xem",
+    "delete": "Xóa",
+    "confirmDelete": "Xác nhận xóa",
+    "confirmDeleteMessage": "Bạn có chắc muốn xóa tài khoản này?",
+    "cancel": "Hủy",
+    "deleteSuccess": "Xóa tài khoản thành công!",
+    "deleteFail": "Xóa tài khoản thất bại!"
   }
 }

@@ -93,7 +93,7 @@ export default function useAccount() {
       }
 
       const createdData = await response.json();
-      await fetchAccounts(); // Refetch the account list after creating a new account
+      await fetchAccounts(); 
 
       return { success: true, data: createdData };
     } catch (error) {
@@ -169,6 +169,90 @@ export default function useAccount() {
     }
   }
 
+  const filterAccountsByPrivilege = async (privilege: string) => {
+    try {
+      isLoading.value = true;
+      const response = await fetch(`${API_URL}/accounts/filter/privilege/${privilege}`, {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to filter accounts by privilege.');
+      }
+
+      const filteredAccounts = await response.json();
+      accounts.value = filteredAccounts; 
+      return { success: true, data: filteredAccounts };
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error filtering accounts by privilege:', error.message);
+        return { success: false, message: error.message };
+      } else {
+        console.error('Unknown error:', error);
+        return { success: false, message: 'An unknown error occurred.' };
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
+  const filterAccountsByNameOrEmail = async (query: string) => {
+    try {
+      isLoading.value = true;
+      const response = await fetch(`${API_URL}/accounts/filter/nameoremail?query=${encodeURIComponent(query)}`, {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to filter accounts by name or email.');
+      }
+
+      const filteredAccounts = await response.json();
+      accounts.value = filteredAccounts; 
+      return { success: true, data: filteredAccounts };
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error filtering accounts by name or email:', error.message);
+        return { success: false, message: error.message };
+      } else {
+        console.error('Unknown error:', error);
+        return { success: false, message: 'An unknown error occurred.' };
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
+  const filterAccountsByStatus = async (status: string) => {
+    try {
+      isLoading.value = true;
+      const response = await fetch(`${API_URL}/accounts/filter/status?status=${encodeURIComponent(status)}`, {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to filter accounts by status.');
+      }
+
+      const filteredAccounts = await response.json();
+      accounts.value = filteredAccounts; 
+      return { success: true, data: filteredAccounts };
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error filtering accounts by status:', error.message);
+        return { success: false, message: error.message };
+      } else {
+        console.error('Unknown error:', error);
+        return { success: false, message: 'An unknown error occurred.' };
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
   return {
     accounts,
     selectedAccount,
@@ -179,6 +263,9 @@ export default function useAccount() {
     deleteAccount,
     toggleAccountStatus,
     updateAccountPrivilege,
-    createAccount
+    createAccount,
+    filterAccountsByPrivilege,
+    filterAccountsByNameOrEmail,
+    filterAccountsByStatus
   }
 }

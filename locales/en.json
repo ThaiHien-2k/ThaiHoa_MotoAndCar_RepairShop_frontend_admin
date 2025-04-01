@@ -46,5 +46,34 @@
       "pending": "Pending",
       "cancelled": "Cancelled"
     }
+  },
+  "accounts": {
+    "manageAccounts": "Manage Accounts",
+    "createAccount": "Create New Account",
+    "filterByPrivilege": "Filter by Privilege",
+    "filterByStatus": "Filter by Status",
+    "filterByNameOrEmail": "Filter by Name or Email",
+    "enterNameOrEmail": "Enter name or email",
+    "all": "All",
+    "admin": "Admin",
+    "manager": "Manager",
+    "user": "User",
+    "active": "Active",
+    "inactive": "Inactive",
+    "reset": "Reset",
+    "id": "ID",
+    "name": "Name",
+    "email": "Email",
+    "privilege": "Privilege",
+    "roleDescription": "Role Description",
+    "status": "Status",
+    "actions": "Actions",
+    "view": "View",
+    "delete": "Delete",
+    "confirmDelete": "Confirm Delete",
+    "confirmDeleteMessage": "Are you sure you want to delete this account?",
+    "cancel": "Cancel",
+    "deleteSuccess": "Account deleted successfully!",
+    "deleteFail": "Failed to delete the account!"
   }
 }

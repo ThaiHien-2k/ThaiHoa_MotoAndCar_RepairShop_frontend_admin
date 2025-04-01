@@ -78,7 +78,7 @@
   const colorMode = useColorMode()
   const isDarkMode = ref(localStorage.getItem('darkMode') === 'true')
   
-  const { t } = useI18n() // Gọi i18n
+  const { t } = useI18n() 
   
   onMounted(() => {
     document.documentElement.classList.toggle('dark', isDarkMode.value)

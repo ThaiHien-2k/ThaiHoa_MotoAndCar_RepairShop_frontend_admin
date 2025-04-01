@@ -1,9 +1,5 @@
 <template>
-    <div class="p-8">
-      <h1 class="text-3xl font-bold mb-6">Chào mừng {{ user?.name }}!</h1>
-  
-      <button @click="handleLogout" class="btn">Đăng xuất</button>
-    </div>
+
   </template>
   
   <script setup>

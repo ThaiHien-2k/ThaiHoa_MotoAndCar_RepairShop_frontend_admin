@@ -74,6 +74,24 @@
     "confirmDeleteMessage": "Are you sure you want to delete this account?",
     "cancel": "Cancel",
     "deleteSuccess": "Account deleted successfully!",
-    "deleteFail": "Failed to delete the account!"
+    "deleteFail": "Failed to delete the account!",
+    "back": "Back",
+    "password": "Password",
+    "creating": "Creating...",
+    "createSuccess": "Account created successfully!",
+    "createFail": "Failed to create the account!",
+    "adminRole1": "Manage the entire system",
+    "adminRole2": "Highest privileges",
+    "managerRole1": "Manage employees",
+    "managerRole2": "Manage products",
+    "managerRole3": "Manage orders",
+    "userRole1": "Customer",
+    "userRole2": "Regular user",
+    "detailsTitle": "Account Details",
+    "loading": "Loading...",
+    "save": "Save",
+    "updateSuccess": "Account updated successfully!",
+    "updateFail": "Failed to update account.",
+    "updateFailRetry": "Failed to update account. Please try again."
   }
 }

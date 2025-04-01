@@ -74,6 +74,24 @@
     "confirmDeleteMessage": "Bạn có chắc muốn xóa tài khoản này?",
     "cancel": "Hủy",
     "deleteSuccess": "Xóa tài khoản thành công!",
-    "deleteFail": "Xóa tài khoản thất bại!"
+    "deleteFail": "Xóa tài khoản thất bại!",
+    "back": "Quay lại",
+    "password": "Mật khẩu",
+    "creating": "Đang tạo...",
+    "createSuccess": "Tạo tài khoản thành công!",
+    "createFail": "Tạo tài khoản thất bại!",
+    "adminRole1": "Quản lý toàn bộ hệ thống",
+    "adminRole2": "Quyền hạn cao nhất",
+    "managerRole1": "Quản lý nhân viên",
+    "managerRole2": "Quản lý sản phẩm",
+    "managerRole3": "Quản lý đơn hàng",
+    "userRole1": "Khách hàng",
+    "userRole2": "Người dùng bình thường",
+    "detailsTitle": "Chi tiết tài khoản",
+    "loading": "Đang tải...",
+    "save": "Lưu",
+    "updateSuccess": "Cập nhật tài khoản thành công!",
+    "updateFail": "Cập nhật tài khoản thất bại.",
+    "updateFailRetry": "Cập nhật tài khoản thất bại. Vui lòng thử lại."
   }
 }

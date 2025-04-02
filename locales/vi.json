@@ -119,6 +119,8 @@
     "cancel": "Hủy",
     "reset": "Đặt lại",
     "deleteSuccess": "Xóa khách hàng thành công!",
-    "deleteFail": "Xóa khách hàng thất bại."
+    "deleteFail": "Xóa khách hàng thất bại.",
+    "VIP": "Khách hàng VIP",
+    "normal": "Khách hàng thường"
   }
 }

@@ -119,6 +119,8 @@
       "cancel": "Cancel",
       "reset": "Reset",
       "deleteSuccess": "Customer deleted successfully!",
-      "deleteFail": "Failed to delete the customer."
+      "deleteFail": "Failed to delete the customer.",
+      "VIP": "VIP",
+      "normal": "Normal"
     }
 }

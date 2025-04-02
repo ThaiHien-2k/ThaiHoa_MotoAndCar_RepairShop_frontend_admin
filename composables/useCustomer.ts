@@ -48,6 +48,7 @@ export default function useCustomer() {
   }
 
   const updateCustomer = async (id: string, data: object) => {
+    console.log('Updating customer with ID:', id, 'and data:', data);
     try {
       const response = await fetch(`${API_URL}/customers/${id}`, {
         method: 'PUT',

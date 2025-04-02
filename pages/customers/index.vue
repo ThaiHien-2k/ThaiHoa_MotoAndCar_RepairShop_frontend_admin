@@ -10,8 +10,8 @@
           <label class="block text-gray-700 dark:text-white font-medium mb-2">{{ t('customers.filterByType') }}</label>
           <select v-model="filters.customer_type" class="input-field w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option value="">{{ t('customers.all') }}</option>
-            <option value="cá nhân">{{ t('customers.individual') }}</option>
-            <option value="doanh nghiệp">{{ t('customers.business') }}</option>
+            <option value="0">{{ t('customers.VIP') }}</option>
+            <option value="1">{{ t('customers.normal') }}</option>
           </select>
         </div>
         <div class="filter-item">
@@ -23,14 +23,6 @@
             class="input-field w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
-      </div>
-      <div class="mt-6 flex justify-end">
-        <button
-          @click="resetFilters"
-          class="submit-button bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 transition"
-        >
-          {{ t('customers.reset') }}
-        </button>
       </div>
     </div>
     <div
@@ -45,7 +37,7 @@
         <thead>
           <tr class="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white">
             <th class="p-3 hidden w-20">{{ t('customers.id') }}</th>
-            <th class="p-3 w-40 text-left">{{ t('customers.name') }}</th>
+            <th class="p-3 w-60 text-left">{{ t('customers.name') }}</th>
             <th class="p-3 w-60 text-left">{{ t('customers.email') }}</th>
             <th class="p-3 w-40 text-left">{{ t('customers.phone') }}</th>
             <th class="p-3 w-80 text-left">{{ t('customers.address') }}</th>
@@ -55,7 +47,7 @@
         </thead>
         <tbody>
           <tr
-            v-for="customer in filteredCustomers"
+            v-for="customer in processedCustomers"
             :key="customer._id"
             class="border-t border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition text-gray-900 dark:text-white"
           >
@@ -64,7 +56,7 @@
             <td class="p-3">{{ customer.email }}</td>
             <td class="p-3">{{ customer.phone }}</td>
             <td class="p-3">{{ customer.address }}</td>
-            <td class="p-3">{{ customer.customer_type }}</td>
+            <td class="p-3">{{ customer.customer_type_label }}</td>
             <td class="p-3 flex justify-center gap-3">
               <NuxtLink
                 :to="`/customers/${customer._id}`"
@@ -113,27 +105,23 @@ const filters = ref({
   query: ''
 });
 
-const filteredCustomers = computed(() => {
-  return customers.value.filter((customer) => {
-    const matchesType =
-      !filters.value.customer_type || customer.customer_type === filters.value.customer_type;
-    const matchesQuery =
-      !filters.value.query ||
-      customer.name.toLowerCase().includes(filters.value.query.toLowerCase()) ||
-      customer.email.toLowerCase().includes(filters.value.query.toLowerCase());
+const processedCustomers = computed(() => {
+  return customers.value
+    .map((customer) => ({
+      ...customer,
+      customer_type_label: customer.customer_type === '0' ? t('customers.VIP') : t('customers.normal'),
+    }))
+    .filter((customer) => {
+      const matchesType =
+        !filters.value.customer_type || customer.customer_type === filters.value.customer_type;
+      const matchesQuery =
+        !filters.value.query ||
+        customer.name.toLowerCase().includes(filters.value.query.toLowerCase()) ||
+        customer.email.toLowerCase().includes(filters.value.query.toLowerCase());
 
-    return matchesType && matchesQuery;
-  });
+      return matchesType && matchesQuery;
+    });
 });
-
-const resetFilters = () => {
-  filters.value = {
-    customer_type: '',
-    query: ''
-  };
-};
-
-
 
 
 

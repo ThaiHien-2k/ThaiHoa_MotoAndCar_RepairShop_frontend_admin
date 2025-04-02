@@ -38,14 +38,6 @@
           />
         </div>
       </div>
-      <div class="mt-6 flex justify-end">
-        <button
-          @click="resetFilters"
-          class="submit-button bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 transition"
-        >
-          {{ t('accounts.reset') }}
-        </button>
-      </div>
     </div>
     <div
       v-if="notificationStore.visible"

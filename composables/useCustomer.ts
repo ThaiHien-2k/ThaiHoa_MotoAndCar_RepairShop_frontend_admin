@@ -46,6 +46,47 @@ export default function useCustomer() {
       isLoading.value = false
     }
   }
+  const getCustomerByAccountId = async (id: string) => {
+    try {
+      isLoading.value = true
+      const response = await fetch(`${API_URL}/customers/account/${id}`, {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      })
+      if (!response.ok) throw new Error('Failed to fetch customer details.')
+      selectedCustomer.value = await response.json()
+      return selectedCustomer
+    } catch (error) {
+      console.error('Error fetching customer details:', error)
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  
+
+  const hasCustomer = async (id: string): Promise<boolean> => {
+    try {
+      const response = await fetch(`${API_URL}/customers/has_customer`, {
+        method: 'POST',
+        headers: { 
+          Authorization: `Bearer ${getToken()}`,
+          'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify({ id })
+      });
+  
+      if (!response.ok) {
+        return false; 
+      }
+  
+      const data = await response.json();
+      return data.exists; 
+    } catch (error) {
+      console.error('Error checking customer:', error);
+      return false;
+    }
+  };
+  
 
   const updateCustomer = async (id: string, data: object) => {
     console.log('Updating customer with ID:', id, 'and data:', data);
@@ -144,5 +185,7 @@ export default function useCustomer() {
     updateCustomer,
     deleteCustomer,
     createCustomer,
+    hasCustomer,
+    getCustomerByAccountId,
   }
 }

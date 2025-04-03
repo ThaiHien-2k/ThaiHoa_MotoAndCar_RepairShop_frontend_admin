@@ -41,7 +41,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      BACKEND_API_URL: process.env.BACKEND_API_URL || 'http://localhost:3001',
+      BACKEND_API_URL: process.env.BACKEND_API_URL || 'http://localhost:5000/api',
       URL_IMAGE_PRODUCT: process.env.URL_IMAGE_PRODUCT || 'http://localhost:5000/uploads/products/',
       URL_IMAGE_AVATAR: process.env.URL_IMAGE_AVATAR || 'http://localhost:5000/uploads/avatar/',
     },

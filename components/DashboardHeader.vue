@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import { useI18n } from 'vue-i18n'
 const { locales, setLocale } = useI18n()
-
+const imageUrl = useRuntimeConfig().public.URL_IMAGE_AVATAR;
 const { logout, user } = useAuth()
 const { t, locale } = useI18n()
 const router = useRouter()
@@ -92,10 +92,18 @@ onMounted(() => {
 
       <div class="relative dropdown-container">
         <button @click="dropdownOpen = !dropdownOpen" class="p-2 rounded-full hover:bg-gray-600 transition">
-          <img v-if="user?.avatar" :src="user.avatar" alt="Avatar" class="w-8 h-8 rounded-full object-cover" />
-          <div v-else class="w-8 h-8 flex items-center justify-center bg-gray-600 text-white rounded-full text-sm">
-            👤
-          </div>
+          <img
+            v-if="user?.avatar"
+            :src="imageUrl+user.avatar"
+            alt="Avatar"
+            class="w-8 h-8 rounded-full object-cover"
+          />
+          <img
+            v-else
+            src="@/assets/default_avatar.svg"
+            alt="Default Avatar"
+            class="w-8 h-8 rounded-full object-cover"
+          />
         </button>
 
         <div v-if="dropdownOpen" class="absolute right-0 mt-2 w-48 bg-gray-800 text-white rounded-lg shadow-lg border border-gray-700 text-sm z-50">

@@ -16,6 +16,23 @@
 
     <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 mx-auto max-w-screen-lg">
       <form @submit.prevent="handleCreateAccount" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Avatar Upload -->
+        <div class="md:col-span-2 text-center">
+          <label class="block text-gray-700 dark:text-white font-medium">{{ t('accounts.avatar') }}</label>
+          <div class="flex flex-col items-center mb-4">
+            <img
+              :src="previewImage || defaultAvatar"
+              alt="Avatar Preview"
+              class="w-32 h-32 rounded-full shadow-lg mb-2 object-cover"
+            />
+            <input type="file" @change="onAvatarChange" class="hidden" ref="avatarInput" />
+            <button @click="triggerFileInput" type="button" class="text-blue-600 hover:underline">
+              {{ t('accounts.changeAvatar') }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Form Fields -->
         <div>
           <label class="block text-gray-700 dark:text-white font-medium">{{ t('accounts.name') }}</label>
           <input v-model="formData.name" type="text" required class="input-field" />
@@ -45,10 +62,10 @@
           </select>
         </div>
 
-        <div >
+        <div>
           <label class="block text-gray-700 dark:text-white font-medium">{{ t('accounts.roleDescription') }}</label>
           <select v-model="formData.role_description" class="input-field">
-            <option v-for="desc in roleOptions[formData.privilege]" :key="desc" :value="desc">
+            <option v-for="(desc, index) in roleOptions[formData.privilege]" :key="index" :value="index">
               {{ desc }}
             </option>
           </select>
@@ -59,6 +76,7 @@
           <textarea v-model="formData.address" required class="input-field"></textarea>
         </div>
 
+        <!-- Submit Button -->
         <div class="md:col-span-2 text-center">
           <button type="submit" :disabled="isLoading" class="submit-button">
             {{ isLoading ? t('accounts.creating') : t('accounts.createAccount') }}
@@ -75,6 +93,7 @@ import { useRouter } from 'vue-router';
 import useAccount from '@/composables/useAccount';
 import { useNotificationStore } from '@/stores/notificationStore';
 import { useI18n } from 'vue-i18n';
+import defaultAvatar from '@/assets/default_avatar.svg'; // Import ảnh mặc định
 
 const { t } = useI18n();
 
@@ -85,31 +104,74 @@ const notificationStore = useNotificationStore();
 const { createAccount } = useAccount();
 
 const roleOptions = computed(() => ({
-  '0': [t('accounts.adminRole1'), t('accounts.adminRole2')],
-  '1': [t('accounts.managerRole1'), t('accounts.managerRole2'), t('accounts.managerRole3')],
-  '2': [t('accounts.userRole1'), t('accounts.userRole2')],
+  '0': [
+    t('accounts.adminRole1'), // 0: Super Admin
+    t('accounts.adminRole2'), // 1: Admin
+  ],
+  '1': [
+    t('accounts.managerRole1'), // 2: Manager Level 1
+    t('accounts.managerRole2'), // 3: Manager Level 2
+    t('accounts.managerRole3'), // 4: Manager Level 3
+  ],
+  '2': [
+    t('accounts.userRole1'), // 5: Regular User
+    t('accounts.userRole2'), // 6: Guest User
+  ],
 }));
 
 const formData = ref({
   name: '',
   email: '',
   password: '',
-  phone: '', // Added phone field
-  address: '', // Added address field
-  privilege: '2',
-  role_description: roleOptions.value['2'][0],
+  phone: '',
+  address: '',
+  privilege: '2', 
+  role_description: 5,
   is_active: true,
+  avatar: null,
 });
 
 const isLoading = ref(false);
+const avatarInput = ref(null);
+const previewImage = ref(null); 
 
 const updateRoleDescription = () => {
   formData.value.role_description = roleOptions.value[formData.value.privilege][0];
 };
 
+const triggerFileInput = () => {
+  avatarInput.value.click();
+};
+
+const onAvatarChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    formData.value.avatar = file; // Save file to formData
+    const reader = new FileReader();
+    reader.onload = () => {
+      previewImage.value = reader.result; // Show preview image
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
 const handleCreateAccount = async () => {
   isLoading.value = true;
-  const result = await createAccount(formData.value);
+
+  const formDataToSend = new FormData();
+  formDataToSend.append('name', formData.value.name);
+  formDataToSend.append('email', formData.value.email);
+  formDataToSend.append('password', formData.value.password);
+  formDataToSend.append('phone', formData.value.phone);
+  formDataToSend.append('address', formData.value.address);
+  formDataToSend.append('privilege', formData.value.privilege);
+  formDataToSend.append('role_description', formData.value.role_description);
+  formDataToSend.append('is_active', formData.value.is_active);
+  if (formData.value.avatar) {
+    formDataToSend.append('avatar', formData.value.avatar); // Attach avatar file
+  }
+  console.log(formDataToSend)
+  const result = await createAccount(formDataToSend);
   if (result.success) {
     notificationStore.showNotification(t('accounts.createSuccess'), 'success');
     router.push('/accounts');
@@ -149,5 +211,13 @@ const handleCreateAccount = async () => {
 .submit-button:disabled {
   background-color: #93c5fd;
   cursor: not-allowed;
+}
+
+.avatar-preview {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 </style>

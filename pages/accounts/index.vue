@@ -86,8 +86,7 @@
                 }}
               </span>
             </td>
-            <td class="p-3">{{ account.role_description }}</td>
-            <td class="p-3 text-center">
+            <td class="p-3">{{ getRoleDescription(account.privilege, account.role_description) }}</td>            <td class="p-3 text-center">
               <span
                 class="px-2 py-1 text-sm font-semibold rounded-lg"
                 :class="{
@@ -154,6 +153,28 @@ const filters = ref({
   query: ''
 });
 
+const roleOptions = computed(() => ({
+  '0': [
+    t('accounts.adminRole1'), // 0: Super Admin
+    t('accounts.adminRole2'), // 1: Admin
+  ],
+  '1': [
+    t('accounts.managerRole1'), // 2: Manager Level 1
+    t('accounts.managerRole2'), // 3: Manager Level 2
+    t('accounts.managerRole3'), // 4: Manager Level 3
+  ],
+  '2': [
+    t('accounts.userRole1'), // 5: Regular User
+    t('accounts.userRole2'), // 6: Guest User
+  ],
+}));
+
+const getRoleDescription = (privilege, roleDescriptionIndex) => {
+  const privilegeKey = String(privilege); // Chuyển privilege thành chuỗi
+  const index = Number(roleDescriptionIndex); // Chuyển roleDescriptionIndex thành số
+  return roleOptions.value[privilegeKey]?.[index] || t('accounts.unknownRole'); // Trả về giá trị hoặc thông báo lỗi
+};
+
 const filteredAccounts = computed(() => {
   return accounts.value.filter((account) => {
     const matchesPrivilege =
@@ -171,13 +192,7 @@ const filteredAccounts = computed(() => {
   });
 });
 
-const resetFilters = () => {
-  filters.value = {
-    privilege: '',
-    status: '',
-    query: ''
-  };
-};
+
 
 const confirmDelete = (account) => {
   selectedAccount.value = account;

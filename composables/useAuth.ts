@@ -8,6 +8,7 @@ interface AuthResponse {
     name: string
     email: string
     privilege: string
+    avatar: string
   }
 }
 

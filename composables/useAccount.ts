@@ -48,37 +48,29 @@ export default function useAccount() {
     }
   };
 
-  const updateAccount = async (id: string, data: object) => {
+  const updateAccount = async (id: string, data: FormData) => {
+    console.log('updateAccount', id, data); // Debugging line
     try {
       const response = await fetch(`${API_URL}/accounts/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${getToken()}`,
-        },
-        body: JSON.stringify(data),
+        headers: { Authorization: `Bearer ${getToken()}` },
+        body: data,
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(`API /accounts (Update Account) failed: ${errorData.message || 'Unknown error'}`);
+        throw new Error(errorData.message || 'Failed to update account.');
       }
-  
+
       const updatedData = await response.json();
-    
       const dataCustomer = {
-        name: updatedData.name,
-        customer_typee: updatedData.privilege === '0' || updatedData.privilege === '1' ? '0' : '1',
+        name: updatedData.account.name,
+        accounts_id: updatedData.account._id,
+        customer_type: updatedData.account.privilege === '0' || updatedData.account.privilege === '1' ? '0' : '1',
       };
-      if(dataCustomer.customer_typee === '1'){
-      const customerResponse = await updateCustomer(updatedData._id, dataCustomer);
-  
-      if (!customerResponse.success) {
-        throw new Error(`API /customers (Update Customer) failed: ${customerResponse.message}`);
-      }
-    }
+      await updateCustomer(id, dataCustomer); 
       await fetchAccounts();
-  
+
       return { success: true, data: updatedData };
     } catch (error) {
       if (error instanceof Error) {
@@ -90,7 +82,6 @@ export default function useAccount() {
       }
     }
   };
-  
 
   const createAccount = async (data: any) => {
     try {
@@ -116,11 +107,9 @@ export default function useAccount() {
         phone: data.phone,
         address: data.address,
         accounts_id: createdData.account._id,
-        customer_type: '1',
-        customer_typee: createdData.account.privilege === '0' || createdData.account.privilege === '1' ? '0' : '1',
+        customer_type: createdData.account.privilege === '0' || createdData.account.privilege === '1' ? '0' : '1',
       };
   
-      if(dataCustomer.customer_typee === '1'){
       const customerResponse = await createCustomer(dataCustomer);
   
       if (!customerResponse.success) {
@@ -140,7 +129,7 @@ export default function useAccount() {
   
         throw new Error(`API /customers (Create Customer) failed: ${customerResponse.message}. Account rollback successful.`);
       }
-    }
+  
       await fetchAccounts();
   
       return { success: true, data: createdData };
@@ -157,6 +146,11 @@ export default function useAccount() {
   
   const deleteAccount = async (id: string) => {
     try {
+      const customerResponse = await deleteCustomer(id);
+  
+      if (!customerResponse.success) {
+        throw new Error(`API /customers (Delete Customer) failed: ${customerResponse.message}`);
+      }
   
       const response = await fetch(`${API_URL}/accounts/${id}`, {
         method: 'DELETE',
@@ -167,7 +161,7 @@ export default function useAccount() {
         const errorData = await response.json();
         throw new Error(`API /accounts (Delete Account) failed: ${errorData.message || 'Unknown error'}`);
       }
-      await deleteCustomer(id);
+  
       await fetchAccounts();
   
       return { success: true, message: 'Account deleted successfully.' };

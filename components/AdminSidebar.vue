@@ -16,6 +16,15 @@ const menuStructure = reactive([
     ]
   },
   {
+    key: 'products_inventory',
+    icon: '🛒',
+    isOpen: false,
+    subMenu: [
+      { key: 'product_list', route: '/products', permission: 'auth' },
+      { key: 'product_comments', route: '/product-comments', permission: 'auth' },
+    ]
+  },
+  {
     key: 'orders_history',
     icon: '📦',
     isOpen: false,
@@ -25,16 +34,7 @@ const menuStructure = reactive([
       { key: 'repair_history', route: '/repair-history', permission: 'auth' }
     ]
   },
-  {
-    key: 'products_inventory',
-    icon: '🛒',
-    isOpen: false,
-    subMenu: [
-      { key: 'product_list', route: '/products', permission: 'auth' },
-      { key: 'product_comments', route: '/product-comments', permission: 'auth' },
-      { key: 'inventory', route: '/inventory', permission: 'admin' }
-    ]
-  },
+
   {
     key: 'services_appointments',
     icon: '🛠️',

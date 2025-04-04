@@ -67,7 +67,7 @@
                 />
                 <span v-else>{{ t('products.noImage') }}</span>
               </td>
-              <td class="p-3">{{ product.category?.name || t('products.unknownCategory') }}</td>
+              <td class="p-3">{{ findNameCategory(product.category_id) || t('products.unknownCategory') }}</td>
               <td class="p-3">{{ product.price }}</td>
               <td class="p-3">{{ product.stock_quantity }}</td>
               <td class="p-3 flex justify-center gap-3">
@@ -111,6 +111,11 @@
   import useProduct from '@/composables/useProduct';
   import { useNotificationStore } from '@/stores/notificationStore';
   import { useI18n } from 'vue-i18n';
+  import { useCategory } from '~/composables/useCategory';
+
+  const { categories, fetchCategories } = useCategory();
+
+
 
   const imageUrl = useRuntimeConfig().public.URL_IMAGE_PRODUCT;
   
@@ -127,7 +132,6 @@
     query: '',
   });
   
-  const categories = ref([]); // Fetch categories if needed
   
   const filteredProducts = computed(() => {
     return products.value.filter((product) => {
@@ -143,7 +147,15 @@
     });
   });
   
+  const productCategories = computed(() => {
+    return categories.value.filter((cat) => cat.type === 0);
+  });
 
+  const findNameCategory = (categoryId) => {
+    console.log('categoryId', categoryId);
+    const category = productCategories.value.find((cat) => cat._id === categoryId);
+    return category ? category.name : null;
+  };
   
   const confirmDelete = (product) => {
     selectedProduct.value = product;
@@ -172,6 +184,7 @@
   
   onMounted(() => {
     fetchProducts();
+    fetchCategories();
   });
   
   definePageMeta({ layout: 'admin' });

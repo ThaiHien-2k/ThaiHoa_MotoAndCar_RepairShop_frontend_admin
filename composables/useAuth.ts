@@ -1,4 +1,5 @@
 import { useStorage } from '@vueuse/core'
+import { jwtDecode } from 'jwt-decode'
 
 interface AuthResponse {
   message: string
@@ -64,19 +65,33 @@ export const useAuth = () => {
         localStorage.removeItem('access_token')
         localStorage.removeItem('user')
       }
+
+      return navigateTo('/login')
+    }
+  }
+
+  const isTokenExpired = () => {
+    if (!token.value) return true
+    try {
+      const decoded: any = jwtDecode(token.value)
+      const now = Math.floor(Date.now() / 1000)
+      return decoded.exp < now
+    } catch {
+      return true
     }
   }
 
   const parsedUser = computed(() => {
     try {
       return user.value ? JSON.parse(user.value) : null
-    } catch (e) {
-      console.error('Failed to parse user data', e)
+    } catch {
       return null
     }
   })
 
-  const isAuthenticated = computed(() => !!token.value)
+  const isAuthenticated = computed(() => {
+    return !!token.value && !isTokenExpired()
+  })
 
-  return { token, user: parsedUser, login, logout, isAuthenticated }
+  return { token, user: parsedUser, login, logout, isAuthenticated, isTokenExpired }
 }

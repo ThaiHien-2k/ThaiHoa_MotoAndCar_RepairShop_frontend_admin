@@ -1,10 +1,29 @@
 <script setup lang="ts">
-import { reactive, computed } from 'vue'
+import { reactive, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 
-const menuStructure = reactive([
+const STORAGE_KEY = 'sidebarMenuState'
+
+interface SubMenuItem {
+  key: string
+  route: string
+  permission: string
+  name?: string
+}
+
+interface MenuItem {
+  key: string
+  icon: string
+  route?: string
+  permission?: string
+  isOpen: boolean
+  subMenu?: SubMenuItem[]
+  name?: string
+}
+
+const defaultMenuStructure: MenuItem[] = [
   { key: 'dashboard', icon: '🏠', route: '/', permission: 'all', isOpen: false },
   {
     key: 'accounts_customers',
@@ -34,7 +53,6 @@ const menuStructure = reactive([
       { key: 'repair_history', route: '/repair-history', permission: 'auth' }
     ]
   },
-
   {
     key: 'services_appointments',
     icon: '🛠️',
@@ -73,7 +91,20 @@ const menuStructure = reactive([
       { key: 'categories', route: '/categories', permission: 'auth' }
     ]
   }
-])
+]
+
+const savedState = localStorage.getItem(STORAGE_KEY)
+const menuStructure = reactive<MenuItem[]>(
+  savedState ? JSON.parse(savedState) : defaultMenuStructure
+)
+
+watch(
+  () => menuStructure.map(item => ({ key: item.key, isOpen: item.isOpen })),
+  () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(menuStructure))
+  },
+  { deep: true }
+)
 
 const menuItems = computed(() => {
   return menuStructure.map(item => ({
@@ -92,29 +123,37 @@ const toggleMenu = (index: number) => {
 </script>
 
 <template>
-  <aside class="w-64 h-full fixed left-0 top-0 bottom-0 bg-gray-800 text-white p-4 text-sm">
+  <aside class="w-64 h-full fixed left-0 top-0 bottom-0 bg-gray-800 text-white p-4 text-sm overflow-y-auto">
     <nav>
       <ul>
-        <li v-for="(item, index) in menuItems" :key="index" class="mb-2">
-          <div v-if="item.subMenu"
-               class="cursor-pointer p-2 bg-gray-700 rounded-md hover:bg-gray-600 flex justify-between items-center"
-               @click="toggleMenu(index)">
+        <li v-for="(item, index) in menuItems" :key="item.key" class="mb-2">
+          <div
+            v-if="item.subMenu"
+            class="cursor-pointer p-2 bg-gray-700 rounded-md hover:bg-gray-600 flex justify-between items-center"
+            @click="toggleMenu(index)"
+          >
             <span>{{ item.icon }} {{ item.name }}</span>
             <span :class="{ 'rotate-180': item.isOpen }">▼</span>
           </div>
 
           <ul v-if="item.isOpen" class="ml-4 mt-2">
-            <li v-for="(sub, subIndex) in item.subMenu" :key="subIndex">
-              <router-link :to="sub.route" class="block px-4 py-2 hover:bg-gray-600 rounded-md">
+            <li v-for="sub in item.subMenu" :key="sub.key">
+              <NuxtLink
+                :to="sub.route"
+                class="block px-4 py-2 hover:bg-gray-600 rounded-md"
+              >
                 {{ sub.name }}
-              </router-link>
+              </NuxtLink>
             </li>
           </ul>
 
-          <router-link v-if="!item.subMenu && item.route" :to="item.route"
-                 class="block p-2 bg-gray-700 rounded-md hover:bg-gray-600 flex items-center">
+          <NuxtLink
+            v-if="!item.subMenu && item.route"
+            :to="item.route"
+            class="block p-2 bg-gray-700 rounded-md hover:bg-gray-600 flex items-center"
+          >
             <span class="mr-2">{{ item.icon }}</span> {{ item.name }}
-          </router-link>
+          </NuxtLink>
         </li>
       </ul>
     </nav>
@@ -124,5 +163,6 @@ const toggleMenu = (index: number) => {
 <style scoped>
 .rotate-180 {
   transform: rotate(180deg);
+  transition: transform 0.2s;
 }
 </style>

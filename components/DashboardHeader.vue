@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, onBeforeMount, nextTick } from 'vue'
-import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import { useI18n } from 'vue-i18n'
 const { locales, setLocale } = useI18n()
@@ -110,10 +109,10 @@ onMounted(() => {
           <ul>
             <li class="px-4 py-2 font-medium border-b border-gray-700">{{ user?.name || t('admin') }}</li>
             <li>
-              <router-link to="/profile" class="block px-4 py-2 hover:bg-gray-700 transition">{{ t('profile') }}</router-link>
+              <NuxtLink to="/profile" class="block px-4 py-2 hover:bg-gray-700 transition">{{ t('profile') }}</NuxtLink>
             </li>
             <li>
-              <router-link to="/settings" class="block px-4 py-2 hover:bg-gray-700 transition">{{ t('settings') }}</router-link>
+              <NuxtLink to="/settings" class="block px-4 py-2 hover:bg-gray-700 transition">{{ t('settings') }}</NuxtLink>
             </li>
             <li>
               <button @click="handleLogout" class="w-full text-left px-4 py-2 text-red-500 hover:bg-red-600 hover:text-white transition">{{ t('logout') }}</button>

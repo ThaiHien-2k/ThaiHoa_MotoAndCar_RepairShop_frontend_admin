@@ -71,7 +71,6 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
 import useAccount from '@/composables/useAccount';
 import { useNotificationStore } from '@/stores/notificationStore';
 import { useI18n } from 'vue-i18n';

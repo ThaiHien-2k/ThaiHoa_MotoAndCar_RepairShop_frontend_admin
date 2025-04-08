@@ -50,7 +50,6 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 import { useNotificationStore } from '@/stores/notificationStore'
 import useAccount from '@/composables/useAccount'
 import { useI18n } from 'vue-i18n';

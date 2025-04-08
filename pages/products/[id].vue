@@ -180,7 +180,6 @@
   
   <script setup>
   import { ref, onMounted, watch } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
   import { useNotificationStore } from '@/stores/notificationStore';
   import useProduct from '@/composables/useProduct';
   import { useCategory } from '~/composables/useCategory';

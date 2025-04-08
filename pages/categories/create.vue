@@ -66,7 +66,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 import { useCategory } from '@/composables/useCategory';
 import { useNotificationStore } from '@/stores/notificationStore';
 import { useI18n } from 'vue-i18n';

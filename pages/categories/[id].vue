@@ -68,7 +68,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
 import {useCategory} from '@/composables/useCategory';
 import { useNotificationStore } from '@/stores/notificationStore';
 import { useI18n } from 'vue-i18n';

@@ -17,6 +17,11 @@ export default defineNuxtConfig({
     layoutTransition: true,
   },
   modules: ['@pinia/nuxt', '@nuxtjs/i18n'],
+  vite: {
+    optimizeDeps: {
+      include: ['jwt-decode']
+    }
+  },
 
   i18n: {
     locales: [

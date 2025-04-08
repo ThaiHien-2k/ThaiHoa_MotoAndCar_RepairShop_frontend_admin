@@ -15,7 +15,7 @@
         <AdminSidebar class="relative z-10" />
 
         <div class="flex-1 p-8 relative z-20 bg-gray-100 dark:bg-gray-900 overflow-auto mt-0 pt-0">
-          <NuxtPage />
+          <slot />
         </div>
       </div>
 

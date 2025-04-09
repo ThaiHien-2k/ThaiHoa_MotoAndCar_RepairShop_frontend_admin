@@ -94,7 +94,22 @@
     "updateFail": "Cập nhật tài khoản thất bại.",
     "updateFailRetry": "Cập nhật tài khoản thất bại. Vui lòng thử lại.",
     "phone": "Số điện thoại",
-    "address": "Địa chỉ"
+    "address": "Địa chỉ",
+    "accountProfile": "Hồ sơ tài khoản",
+    "changePassword": "Đổi mật khẩu",
+    "changeAvatar": "Đổi ảnh đại diện",
+    "avatar": "Ảnh đại diện",
+    "changePasswordTitle": "Đổi mật khẩu",
+    "oldPassword": "Mật khẩu hiện tại",
+    "newPassword": "Mật khẩu mới",
+    "confirmPassword": "Xác nhận mật khẩu mới",
+    "confirm": "Xác nhận",
+    "passwordUpdateFail": "Cập nhật mật khẩu thất bại.",
+    "passwordUpdateSuccess": "Cập nhật mật khẩu thành công.",
+    "passwordMismatch": "Mật khẩu không khớp.",
+    "passwordRequired": "Mật khẩu là bắt buộc.",
+    "newPasswordRequired": "Mật khẩu mới là bắt buộc.",
+    "confirmPasswordRequired": "Xác nhận mật khẩu là bắt buộc."
   },
   "customers": {
     "manageCustomers": "Quản lý khách hàng",

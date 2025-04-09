@@ -3,13 +3,7 @@
       <div class="relative">
         <h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">{{ t('products.detailsTitle') }}</h1>
   
-        <div
-          v-if="notificationStore.visible"
-          :class="notificationStore.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
-          class="notification"
-        >
-          {{ notificationStore.message }}
-        </div>
+
       </div>
   
       <div v-if="isLoading" class="text-center text-gray-600 dark:text-gray-400">{{ t('products.loading') }}</div>

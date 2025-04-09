@@ -25,13 +25,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-if="notificationStore.visible"
-      :class="notificationStore.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
-      class="notification"
-    >
-      {{ notificationStore.message }}
-    </div>
+
     <div class="overflow-x-auto pt-6">
       <table class="w-full border border-gray-300 dark:border-gray-700 rounded-lg shadow-md">
         <thead>

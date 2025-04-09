@@ -46,14 +46,13 @@ export default function useAccount() {
       isLoading.value = false;
     }
   };
- // Hàm delay giúp chờ một khoảng thời gian nhất định trước khi tiếp tục
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-// Hàm cập nhật tài khoản với một khoảng thời gian chờ giữa các yêu cầu
-const updateAccountWithDelay = async (id: string, data: FormData, type: string) => {
-  await delay(500); // Chờ 500ms trước khi gửi yêu cầu (tùy chỉnh theo nhu cầu)
-  return await updateAccount(id, data, type);
-};
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  const updateAccountWithDelay = async (id: string, data: FormData, type: string) => {
+    await delay(500); 
+    return await updateAccount(id, data, type);
+  };
 
 const updateAccount = async (id: string, data: FormData, type: string) => {
   if (type === 'toUser') {
@@ -216,8 +215,7 @@ const updateAccountToUser = async (id: string, data: FormData) => {
   
       const createdData = await accountResponse.json();
   
-      // Dữ liệu tạo khách hàng
-      const dataCustomer = {
+     const dataCustomer = {
         name: data.get('name'),
         email: data.get('email'),
         phone: data.get('phone'),
@@ -226,11 +224,9 @@ const updateAccountToUser = async (id: string, data: FormData) => {
         customer_type: createdData.account.privilege,
       };
   
-      // Nếu tài khoản có quyền khách hàng, tạo khách hàng
       if (createdData.account.privilege === '2') {
         const createCustomerResponse = await createCustomer(dataCustomer);
         if (!createCustomerResponse.success) {
-          // Nếu tạo khách hàng thất bại, rollback bằng cách xóa tài khoản
           const deleteResponse = await fetch(`${API_URL}/accounts/${createdData.account._id}`, {
             method: 'DELETE',
             headers: {
@@ -243,12 +239,10 @@ const updateAccountToUser = async (id: string, data: FormData) => {
             throw new Error(`Rollback failed at /accounts (Delete Account): ${deleteErrorData.message || 'Unknown error'}`);
           }
   
-          // Nếu rollback thành công, ném lỗi đã tạo khách hàng thất bại
           throw new Error('Failed to create customer, account has been deleted.');
         }
       }
   
-      // Cập nhật lại danh sách tài khoản
       await fetchAccounts();
   
       return { success: true, data: createdData };
@@ -297,6 +291,49 @@ const updateAccountToUser = async (id: string, data: FormData) => {
       }
     }
   };
+
+  const changePassword = async (id: string, oldPassword: string, newPassword: string) => {
+    try {
+      isLoading.value = true;
+      const response = await fetch(`${API_URL}/accounts/${id}/password`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: JSON.stringify({
+          oldPassword,
+          newPassword,
+        }),
+      });
+  
+      const result = await response.json();
+      if (!response.ok) {
+        return {
+          success: false,
+          message: result.message || 'Failed to change password.',
+        };
+      }
+  
+      return {
+        success: true,
+        message: result.message || 'Password changed successfully.',
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Error deleting account:', error.message);
+        return { success: false, message: error.message };
+      } else {
+        console.error('Unknown error:', error);
+        return { success: false, message: 'An unknown error occurred.' };
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  };
+  
+
+  
   
 
   return {
@@ -309,5 +346,6 @@ const updateAccountToUser = async (id: string, data: FormData) => {
     deleteAccount,
     createAccount,
     updateAccountWithDelay,
+    changePassword,
   };
 }

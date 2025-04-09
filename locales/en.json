@@ -94,7 +94,22 @@
     "updateFail": "Failed to update account.",
     "updateFailRetry": "Failed to update account. Please try again.",
     "phone": "Phone",
-    "address": "Address"
+    "address": "Address",
+    "accountProfile": "Account Profile",
+    "changePassword": "Change Password",
+    "changeAvatar": "Change Avatar",
+    "avatar": "Avatar",
+    "changePasswordTitle": "Change Password",
+    "oldPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm New Password",
+    "confirm": "Confirm",
+    "passwordUpdateFail": "Failed to update password.",
+    "passwordUpdateSuccess": "Password updated successfully.",
+    "passwordMismatch": "Passwords do not match.",
+    "passwordRequired": "Password is required.",
+    "newPasswordRequired": "New password is required.",
+    "confirmPasswordRequired": "Confirm password is required."
   },
     "customers": {
       "manageCustomers": "Manage Customers",
@@ -116,12 +131,13 @@
       "delete": "Delete",
       "confirmDelete": "Confirm Delete",
       "confirmDeleteMessage": "Are you sure you want to delete customer {name}?",
-      "cancel": "Cancel",
       "reset": "Reset",
       "deleteSuccess": "Customer deleted successfully!",
       "deleteFail": "Failed to delete the customer.",
       "VIP": "VIP",
-      "normal": "Normal"
+      "normal": "Normal",
+      "cancel": "Cancel"
+
     },
     "products": {
     "manageProducts": "Manage Products",

@@ -10,9 +10,7 @@
       </NuxtLink>
     </div>
 
-    <div v-if="notificationStore.visible" :class="['notification', notificationStore.type]">
-      {{ notificationStore.message }}
-    </div>
+ 
 
     <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 mx-auto max-w-screen-lg">
       <form @submit.prevent="handleCreateAccount" class="grid grid-cols-1 md:grid-cols-2 gap-6">

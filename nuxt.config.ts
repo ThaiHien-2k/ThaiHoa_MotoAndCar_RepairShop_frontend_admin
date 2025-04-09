@@ -15,6 +15,15 @@ export default defineNuxtConfig({
 
   app: {
     layoutTransition: true,
+    head: {
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: '/logo.png',
+        }
+      ]
+    },
   },
   modules: ['@pinia/nuxt', '@nuxtjs/i18n'],
   vite: {

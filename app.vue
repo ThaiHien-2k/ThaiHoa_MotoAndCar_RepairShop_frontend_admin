@@ -30,8 +30,6 @@ onMounted(() => {
   }
 })
 
-
-
 </script>
 
 <style scoped>

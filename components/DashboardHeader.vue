@@ -63,9 +63,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <header class="h-16 px-4 bg-gray-800 dark:bg-gray-900 text-white shadow-md flex justify-between items-center border-b border-gray-700">
-    <h1 class="text-lg font-semibold tracking-wide">{{ t('admin_panel') }}</h1>
-    
+  <header class="h-16 pr-4 bg-gray-800 dark:bg-gray-900 text-white shadow-md flex justify-between items-center border-b border-gray-700">
+    <h1 class="text-lg font-semibold tracking-wide flex items-center gap-2">
+  <img src="/logo.png" class="h-16" />
+  {{ t('admin_panel') }}
+</h1>    
     <div class="relative flex items-center space-x-3">
       <button @click="toggleDarkMode" class="p-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition">
         <span v-if="isDarkMode">🌙</span>

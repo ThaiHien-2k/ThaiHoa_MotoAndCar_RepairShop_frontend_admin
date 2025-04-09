@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { reactive, computed, watch } from 'vue'
+import { reactive, computed, watch, ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useSidebarStore } from '@/stores/sidebar'
 
 const { t } = useI18n()
+const sidebar = useSidebarStore()
 
 const STORAGE_KEY = 'sidebarMenuState'
 
@@ -94,9 +96,7 @@ const defaultMenuStructure: MenuItem[] = [
 ]
 
 const savedState = localStorage.getItem(STORAGE_KEY)
-const menuStructure = reactive<MenuItem[]>(
-  savedState ? JSON.parse(savedState) : defaultMenuStructure
-)
+const menuStructure = reactive<MenuItem[]>(savedState ? JSON.parse(savedState) : defaultMenuStructure)
 
 watch(
   () => menuStructure.map(item => ({ key: item.key, isOpen: item.isOpen })),
@@ -123,8 +123,21 @@ const toggleMenu = (index: number) => {
 </script>
 
 <template>
-  <aside class="w-64 h-full fixed left-0 top-0 bottom-0 bg-gray-800 text-white p-4 text-sm overflow-y-auto">
-    <nav>
+  <aside
+    :class="[ 
+      'h-full fixed top-0 left-0 bottom-0 bg-gray-800 text-white text-sm overflow-y-auto transition-all duration-300 z-40',
+      sidebar.isVisible ? 'w-64 p-4' : 'w-16 p-2'
+    ]"
+  >
+    <button
+      class="absolute top-[45%] right-[-7px] z-50 bg-gray-700 text-white rounded-full p-1 shadow hover:bg-gray-600 transition-all"
+      @click="sidebar.toggle()"
+    >
+      <span v-if="sidebar.isVisible"><</span>
+      <span v-else>></span>
+    </button>
+
+    <nav v-if="sidebar.isVisible">
       <ul>
         <li v-for="(item, index) in menuItems" :key="item.key" class="mb-2">
           <div
@@ -156,6 +169,12 @@ const toggleMenu = (index: number) => {
           </NuxtLink>
         </li>
       </ul>
+    </nav>
+
+    <nav v-else class="flex flex-col gap-4 items-center mt-8">
+      <span v-for="item in menuItems" :key="item.key" class="text-xl" :title="item.name">
+        {{ item.icon }}
+      </span>
     </nav>
   </aside>
 </template>

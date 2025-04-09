@@ -229,5 +229,12 @@
     "updateFail": "Cập nhật danh mục thất bại.",
     "deleteSuccess": "Xóa danh mục thành công!",
     "deleteFail": "Xóa danh mục thất bại."
+  },
+  "common":{
+    "theme": "Thay đổi giao diện",
+    "language": "Thay đổi ngôn ngữ",
+    "sidebar": "Hiện/Ẩn thanh sidebar",
+    "show": "Hiện",
+    "hide": "Ẩn"
   }
 }

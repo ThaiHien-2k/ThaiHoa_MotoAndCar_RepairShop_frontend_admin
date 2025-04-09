@@ -230,5 +230,12 @@
     "updateSuccess": "Category updated successfully!",
     "updateFail": "Failed to update category.",
     "deleteFail": "Failed to delete category."
+  },
+  "common":{
+    "theme": "Change Theme",
+    "language": "Change Language",
+    "sidebar": "Show/Hide Sidebar",
+    "show": "Show",
+    "hide": "Hide"
   }
 }

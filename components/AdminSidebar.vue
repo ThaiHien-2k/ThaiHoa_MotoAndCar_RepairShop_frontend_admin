@@ -68,9 +68,12 @@
                 class="block bg-gray-700 rounded-md hover:bg-gray-600 flex items-center transition-all duration-300"
                 :class="sidebar.isVisible ? 'p-2' : 'p-2 justify-center'"
               >
-                <span class="mr-2">{{ item.icon }}</span>
-                <span v-if="isFullyOpen">{{ item.name }}</span>
+                <span class="flex items-center">
+                  <span>{{ item.icon }}</span>
+                  <span v-if="isFullyOpen" class="ml-2">{{ item.name }}</span>
+                </span>
               </NuxtLink>
+
             </li>
           </ul>
         </nav>
@@ -96,7 +99,7 @@ watch(() => sidebar.isVisible, (visible) => {
   if (visible) {
     setTimeout(() => {
       isFullyOpen.value = true
-    }, 200) // matches transition duration
+    }, 200) 
   } else {
     isFullyOpen.value = false
   }

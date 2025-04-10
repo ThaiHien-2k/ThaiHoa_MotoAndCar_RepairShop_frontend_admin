@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* .toggleSidebar{
+  position: fixed;
+  z-index: 9999; 
+  top: 50px;
+} */
+
 .notification {
     position: absolute; 
     top: 0;

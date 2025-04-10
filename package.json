@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.2.0",
     "@nuxtjs/i18n": "^9.4.0",
     "@pinia/nuxt": "^0.10.1",
     "@vueuse/core": "^13.0.0",

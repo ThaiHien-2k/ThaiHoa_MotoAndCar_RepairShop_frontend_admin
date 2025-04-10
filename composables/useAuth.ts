@@ -15,35 +15,23 @@ interface AuthResponse {
 
 export const useAuth = () => {
   const isClient = typeof window !== 'undefined'
-  const token = useStorage<string | null>('access_token', isClient ? localStorage.getItem('access_token') : null)
-  const user = useStorage<string | null>('user', isClient ? localStorage.getItem('user') : null)
-
+  const token = useStorage<string | null>('access_token', null)
+  const user = useStorage<string | null>('user', null)
   const config = useRuntimeConfig()
-
-  onMounted(() => {
-    if (isClient) {
-      token.value = localStorage.getItem('access_token')
-      user.value = localStorage.getItem('user')
-    }
-  })
 
   const login = async (email: string, password: string) => {
     try {
-      const { data, error } = await useFetch<AuthResponse>(`${config.public.BACKEND_API_URL}/accounts/login`, {
+      const res = await $fetch<AuthResponse>(`${config.public.BACKEND_API_URL}/accounts/login`, {
         method: 'POST',
         body: { email, password },
       })
 
-      if (error.value) throw new Error(error.value.message || 'Login failed!')
+      token.value = res.token
+      user.value = JSON.stringify(res.user)
 
-      if (data.value) {
-        token.value = data.value.token
-        user.value = JSON.stringify(data.value.user)
-
-        if (isClient) {
-          localStorage.setItem('access_token', data.value.token)
-          localStorage.setItem('user', JSON.stringify(data.value.user))
-        }
+      if (isClient) {
+        localStorage.setItem('access_token', res.token)
+        localStorage.setItem('user', JSON.stringify(res.user))
       }
     } catch (err) {
       console.error('Login Error:', err)
@@ -53,10 +41,12 @@ export const useAuth = () => {
 
   const logout = async () => {
     try {
-      await useFetch(`${config.public.BACKEND_API_URL}/accounts/logout`, {
+      await $fetch(`${config.public.BACKEND_API_URL}/accounts/logout`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token.value}` },
       })
+    } catch (err) {
+      console.warn('Logout request failed:', err)
     } finally {
       token.value = null
       user.value = null
@@ -66,6 +56,7 @@ export const useAuth = () => {
         localStorage.removeItem('user')
       }
 
+      sessionStorage.setItem('hasLoggedOut', 'true')
       return navigateTo('/login')
     }
   }
@@ -93,5 +84,12 @@ export const useAuth = () => {
     return !!token.value && !isTokenExpired()
   })
 
-  return { token, user: parsedUser, login, logout, isAuthenticated, isTokenExpired }
+  return {
+    token,
+    user: parsedUser,
+    login,
+    logout,
+    isAuthenticated,
+    isTokenExpired,
+  }
 }

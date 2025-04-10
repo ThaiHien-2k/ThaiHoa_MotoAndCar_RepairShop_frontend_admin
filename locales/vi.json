@@ -7,7 +7,6 @@
   "sidebar": {
     "admin_panel": "Bảng điều khiển",
     "dashboard": "Trang chủ",
-    "accounts_customers": "Tài khoản & Khách hàng",
     "accounts": "Tài khoản",
     "customers": "Khách hàng",
     "orders_history": "Đơn hàng & Lịch sử",
@@ -26,7 +25,6 @@
     "suppliers": "Nhà cung cấp",
     "blog_posts": "Bài viết",
     "blog_comments": "Bình luận blog",
-    "promotions_categories": "Khuyến mãi & Danh mục",
     "promotions": "Khuyến mãi",
     "categories": "Danh mục",
     "blog": "Blog"

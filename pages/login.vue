@@ -8,8 +8,12 @@ const errorMessage = ref('')
 const loading = ref(false)
 
 const handleLogin = async () => {
+  if (loading.value) return 
+
   try {
     loading.value = true
+    errorMessage.value = ''
+
     await login(email.value, password.value)
 
     if (isAuthenticated.value) {
@@ -17,12 +21,17 @@ const handleLogin = async () => {
     } else {
       errorMessage.value = 'Invalid credentials. Please try again.'
     }
-  } catch (err) {
-    errorMessage.value = 'Login failed. Check your credentials.'
+  } catch (err: any) {
+    if (err?.response?.status === 429) {
+      errorMessage.value = 'Too many login attempts. Please wait a moment.'
+    } else {
+      errorMessage.value = 'Login failed. Check your credentials.'
+    }
   } finally {
     loading.value = false
   }
 }
+
 </script>
 
 <template>

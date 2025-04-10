@@ -6,18 +6,18 @@
     <div class="relative h-full flex flex-col transition-all duration-300">
       <!-- Toggle Button -->
       <button
-        class="absolute top-1/2 right-[-18px] transform -translate-y-1/2 z-30 bg-gray-800 text-white rounded-r-full p-1 shadow hover:bg-gray-800 transition-all duration-300"
+        class="absolute top-1/2 right-[-20px] transform -translate-y-1/2 z-10 bg-gray-800 text-white rounded-r-full p-1 shadow hover:bg-gray-800 transition-all duration-300"
         @click="sidebar.toggle()"
       >
-      <component
-        :is="sidebar.isVisible ? ChevronLeftIcon : ChevronRightIcon"
-        class="w-5 h-5"
-      />
+        <component
+          :is="sidebar.isVisible ? ChevronLeftIcon : ChevronRightIcon"
+          class="w-5 h-5"
+        />
       </button>
 
       <!-- Sidebar content -->
       <div
-        class="flex-1 overflow-y-auto scrollbar-hide transition-all duration-300 z-40"
+        class="flex-1 overflow-y-auto scrollbar-hide transition-all duration-300"
         :class="sidebar.isVisible ? 'p-2 pr-3' : 'p-2'"
       >
         <nav>
@@ -36,10 +36,10 @@
               >
                 <span class="flex items-center">
                   {{ item.icon }}
-                  <span v-if="sidebar.isVisible" class="ml-2">{{ item.name }}</span>
+                  <span v-if="isFullyOpen" class="ml-2">{{ item.name }}</span>
                 </span>
                 <span
-                  v-if="sidebar.isVisible"
+                  v-if="isFullyOpen"
                   :class="['transition-transform', { 'rotate-180': item.isOpen }]"
                 >▼</span>
               </div>
@@ -55,12 +55,11 @@
                       :to="sub.route"
                       class="block px-4 py-2 hover:bg-gray-600 rounded-md whitespace-nowrap"
                     >
-                      {{ sub.name }}
+                      {{ isFullyOpen ? sub.name : '' }}
                     </NuxtLink>
                   </li>
                 </ul>
               </transition>
-
 
               <!-- Item without subMenu -->
               <NuxtLink
@@ -69,10 +68,9 @@
                 class="block bg-gray-700 rounded-md hover:bg-gray-600 flex items-center transition-all duration-300"
                 :class="sidebar.isVisible ? 'p-2' : 'p-2 justify-center'"
               >
-                <span :class="sidebar.isVisible ? 'mr-2' : ''">{{ item.icon }}</span>
-                <span v-if="sidebar.isVisible">{{ item.name }}</span>
+                <span class="mr-2">{{ item.icon }}</span>
+                <span v-if="isFullyOpen">{{ item.name }}</span>
               </NuxtLink>
-
             </li>
           </ul>
         </nav>
@@ -82,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, computed, watch } from 'vue'
+import { ref, reactive, computed, watch, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSidebarStore } from '@/stores/sidebar'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/solid'
@@ -91,6 +89,18 @@ const { t } = useI18n()
 const sidebar = useSidebarStore()
 
 const STORAGE_KEY = 'sidebarMenuState'
+
+const isFullyOpen = ref(sidebar.isVisible)
+
+watch(() => sidebar.isVisible, (visible) => {
+  if (visible) {
+    setTimeout(() => {
+      isFullyOpen.value = true
+    }, 200) // matches transition duration
+  } else {
+    isFullyOpen.value = false
+  }
+})
 
 interface SubMenuItem {
   key: string

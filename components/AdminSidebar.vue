@@ -32,8 +32,8 @@
                 v-if="item.subMenu"
                 class="cursor-pointer bg-gray-700 rounded-md hover:bg-gray-600 flex items-center transition-all duration-300"
                 :class="sidebar.isVisible ? 'p-2 justify-between' : 'p-2 justify-center'"
-                @click="sidebar.isVisible && toggleMenu(index)"
-              >
+                @click="sidebar.isVisible && toggleMenu(item.key)"
+                >
                 <span class="flex items-center">
                   {{ item.icon }}
                   <span v-if="isFullyOpen" class="ml-2">{{ item.name }}</span>
@@ -92,6 +92,10 @@ const { t } = useI18n()
 const sidebar = useSidebarStore()
 
 const STORAGE_KEY = 'sidebarMenuState'
+
+// Parse user from localStorage
+const user = JSON.parse(localStorage.getItem('user') || '{}')
+const userPermissions = user.privilege === '0' ? ['admin'] : ['auth']
 
 const isFullyOpen = ref(sidebar.isVisible)
 
@@ -192,8 +196,19 @@ const defaultMenuStructure: MenuItem[] = [
   }
 ]
 
+// localStorage.removeItem(STORAGE_KEY)
+
 const savedState = localStorage.getItem(STORAGE_KEY)
 const menuStructure = reactive<MenuItem[]>(savedState ? JSON.parse(savedState) : defaultMenuStructure)
+
+menuStructure.forEach(item => {
+  item.name = t(`sidebar.${item.key}`)
+  if (item.subMenu) {
+    item.subMenu.forEach(sub => {
+      sub.name = t(`sidebar.${sub.key}`)
+    })
+  }
+})
 
 watch(
   () => menuStructure.map(item => ({ key: item.key, isOpen: item.isOpen })),
@@ -204,20 +219,28 @@ watch(
 )
 
 const menuItems = computed(() => {
-  return menuStructure.map(item => ({
-    ...item,
-    name: t(`sidebar.${item.key}`),
-    subMenu: item.subMenu?.map(sub => ({
-      ...sub,
-      name: t(`sidebar.${sub.key}`)
+  return menuStructure
+    .filter(item => {
+      if (userPermissions.includes('admin')) return true
+      return item.permission === 'all' || !item.permission || userPermissions.includes(item.permission)
+    })
+    .map(item => ({
+      ...item,
+      subMenu: item.subMenu?.filter(sub => {
+        if (userPermissions.includes('admin')) return true
+        return sub.permission === 'all' || userPermissions.includes(sub.permission)
+      })
     }))
-  }))
+    .filter(item => !item.subMenu || item.subMenu.length > 0 || item.route)
 })
 
-const toggleMenu = (index: number) => {
-  menuStructure[index].isOpen = !menuStructure[index].isOpen
+const toggleMenu = (key: string) => {
+  const target = menuStructure.find(item => item.key === key)
+  if (target) target.isOpen = !target.isOpen
 }
+
 </script>
+
 
 <style scoped>
 .rotate-180 {

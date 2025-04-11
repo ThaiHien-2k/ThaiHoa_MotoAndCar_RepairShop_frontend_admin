@@ -24,7 +24,7 @@
           <h3>{{ $t('dashboard.salesExpenses') }}</h3>
           <Chart type="bar" :data="barChartData" :options="barChartOptions" />
         </div>
-        <div class="chart-container small-chart border rounded-lg">
+        <div class="chart-container  border rounded-lg">
           <h3>{{ $t('dashboard.popularServices') }}</h3>
           <div class="mb-4 h-64">
             <Chart type="doughnut" :data="doughnutChartData" :options="doughnutOptions" />

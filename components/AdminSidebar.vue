@@ -226,13 +226,18 @@ const menuItems = computed(() => {
     })
     .map(item => ({
       ...item,
+      name: t(`sidebar.${item.key}`),
       subMenu: item.subMenu?.filter(sub => {
         if (userPermissions.includes('admin')) return true
         return sub.permission === 'all' || userPermissions.includes(sub.permission)
-      })
+      }).map(sub => ({
+        ...sub,
+        name: t(`sidebar.${sub.key}`)
+      }))
     }))
     .filter(item => !item.subMenu || item.subMenu.length > 0 || item.route)
 })
+
 
 const toggleMenu = (key: string) => {
   const target = menuStructure.find(item => item.key === key)

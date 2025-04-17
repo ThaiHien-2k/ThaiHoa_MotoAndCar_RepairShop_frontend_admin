@@ -46,7 +46,7 @@ export default defineNuxtRouteMiddleware((to, from): ReturnType<NavigationGuard>
     to.path === path || to.path.startsWith(path + '/')
   )?.[1]
 
-  const userPermissions = user.privilege === '0' ? ['admin'] : ['auth']
+  const userPermissions = user.privilege === '0' ? ['admin', 'auth'] : ['auth']
 
   if (requiredPermission && !userPermissions.includes(requiredPermission)) {
     return navigateTo('/unauthorized')

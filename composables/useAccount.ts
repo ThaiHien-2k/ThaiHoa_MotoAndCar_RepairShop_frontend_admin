@@ -1,8 +1,10 @@
 import { ref } from 'vue';
 import useCustomer from './useCustomer'; // Import useCustomer correctly
+import useEmployee from './useEmployee';
 
 export default function useAccount() {
-  const { createCustomer, deleteCustomer,updateCustomer ,fetchCustomerById, hasCustomer} = useCustomer(); // Destructure deleteCustomer correctly
+  const { createCustomer, deleteCustomer,updateCustomer ,fetchCustomerById, hasCustomer} = useCustomer(); 
+  const { createEmployee,deleteEmployee,updateEmployee,fetchEmployeeById} = useEmployee();
   const config = useRuntimeConfig();
   const API_URL = config.public.BACKEND_API_URL;
 

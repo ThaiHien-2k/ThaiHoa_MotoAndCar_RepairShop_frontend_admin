@@ -1,75 +1,82 @@
 import { ref } from 'vue'
 
 export interface Allowance {
-    _id?: string
-    type: string
-    amount: number
-  }
-  
-  export interface Deduction {
-    _id?: string
-    type: string
-    amount: number
-  }
-  
-  export interface Bonus {
-    _id?: string
-    type: string
-    amount: number
-    date: string
-    reason: string
-  }
-  
-  export interface PaymentHistory {
-    _id?: string
-    month: string
-    payment_date: string
-    paid_amount: number
-    status: string
-  }
-  
-  export interface Salary {
-    _id?: string
-    base_salary: number
-    allowances: Allowance[]
-    deductions: Deduction[]
-    bonuses: Bonus[]
-    net_salary: number
-    payment_history: PaymentHistory[]
-  }
-  
-  export interface PerformanceReview {
-    _id?: string
-    date: string
-    score: number
-    comments: string
-  }
-  
-  export interface LeaveRecord {
-    _id?: string
-    date: string
-    reason: string
-  }
-  
-  export interface Employee {
-    _id: string
-    name: string
-    email: string
-    phone: string
-    position: string
-    employment_type: 'full_time' | 'part_time' | 'contract'
-    status: 'active' | 'inactive'
-    hiredDate: string
-    specializations: string[]
-    certifications: string[]
-    salary: Salary
-    performance_reviews: PerformanceReview[]
-    leave_records: LeaveRecord[]
-    bank_account: string
-    createdAt: string
-    updatedAt: string
-  }
-  
+  _id?: string
+  type: string
+  amount: number
+}
+
+export interface Deduction {
+  _id?: string
+  type: string
+  amount: number
+}
+
+export interface Bonus {
+  _id?: string
+  type: string
+  amount: number
+  date: string
+  reason: string
+}
+
+export interface PaymentHistory {
+  _id?: string
+  month: string
+  payment_date: string
+  paid_amount: number
+  status: string
+}
+
+export interface Salary {
+  _id?: string
+  base_salary: number
+  allowances: Allowance[]
+  deductions: Deduction[]
+  bonuses: Bonus[]
+  net_salary: number
+  payment_history: PaymentHistory[]
+}
+
+export interface PerformanceReview {
+  _id?: string
+  date: string
+  score: number
+  comments: string
+}
+
+export interface LeaveRecord {
+  _id?: string
+  date: string
+  reason: string
+}
+
+export interface BankAccount {
+  account_name: string
+  account_number: string
+  bank_name: string
+  expiry_date: string
+}
+
+export interface Employee {
+  _id: string
+  name: string
+  email: string
+  phone: string
+  position: string
+  employment_type: 'full_time' | 'part_time' | 'contract'
+  status: 'active' | 'inactive'
+  hiredDate: string
+  specializations: string[]
+  certifications: string[]
+  salary: Salary
+  performance_reviews: PerformanceReview[]
+  leave_records: LeaveRecord[]
+  bank_account: BankAccount // ✅ Sửa lại từ string thành object
+  createdAt: string
+  updatedAt: string
+}
+
 
 export default function useEmployee() {
   const config = useRuntimeConfig()
@@ -119,25 +126,25 @@ export default function useEmployee() {
     }
   }
 
-  const createEmployee = async (data: Employee): Promise<{ success: boolean; data?: Employee; message?: string }> => {
+  const createEmployee = async (data: any): Promise<{ success: boolean; data?: Employee; message?: string }> => {
     try {
       const response = await fetch(`${API_URL}/employees`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json', // Ensure it is JSON, not FormData
           Authorization: `Bearer ${getToken()}`
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data)  // Sending the data as JSON
       })
-
+  
       if (!response.ok) {
         const errorData = await response.json()
         throw new Error(errorData.message || 'Failed to create employee.')
       }
-
+  
       const createdData = await response.json()
       await fetchEmployees()
-
+  
       return { success: true, data: createdData }
     } catch (error: unknown) {
       const msg = error instanceof Error ? error.message : 'An unknown error occurred.'
@@ -145,6 +152,7 @@ export default function useEmployee() {
       return { success: false, message: msg }
     }
   }
+  
 
   const updateEmployee = async (
     id: string,
@@ -196,6 +204,29 @@ export default function useEmployee() {
     }
   }
 
+  const hasEmployee = async (id: string): Promise<boolean> => {
+    try {
+      const response = await fetch(`${API_URL}/employees/has_employee`, {
+        method: 'POST',
+        headers: { 
+          Authorization: `Bearer ${getToken()}`,
+          'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify({ id })
+      });
+  
+      if (!response.ok) {
+        return false; 
+      }
+  
+      const data = await response.json();
+      return data.exists; 
+    } catch (error) {
+      console.error('Error checking employee:', error);
+      return false;
+    }
+  };
+
   return {
     employees,
     selectedEmployee,
@@ -204,6 +235,7 @@ export default function useEmployee() {
     fetchEmployeeById,
     createEmployee,
     updateEmployee,
-    deleteEmployee
+    deleteEmployee,
+    hasEmployee
   }
 }

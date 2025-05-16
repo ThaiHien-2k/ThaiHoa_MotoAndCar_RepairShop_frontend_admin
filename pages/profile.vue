@@ -103,10 +103,10 @@
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue';
 import { useNotificationStore } from '@/stores/notificationStore';
-import useAccount from '@/composables/useAccount';
+import useAccount from '~/composables/useAccount';
 import { useI18n } from 'vue-i18n';
 import defaultAvatar from '@/assets/default_avatar.svg';
-import useCustomer from '@/composables/useCustomer';
+import useCustomer from '~/composables/useCustomer';
 
 const imageUrl = useRuntimeConfig().public.URL_IMAGE_AVATAR;
 const { t } = useI18n();

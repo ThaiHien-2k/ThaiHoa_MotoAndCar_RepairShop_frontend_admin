@@ -175,7 +175,7 @@
   <script setup>
   import { ref, onMounted, watch } from 'vue';
   import { useNotificationStore } from '@/stores/notificationStore';
-  import useProduct from '@/composables/useProduct';
+  import useProduct from '~/composables/useProduct';
   import { useCategory } from '~/composables/useCategory';
 
   import { useI18n } from 'vue-i18n';

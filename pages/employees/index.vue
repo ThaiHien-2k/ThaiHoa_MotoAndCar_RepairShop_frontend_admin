@@ -64,7 +64,7 @@
               <th class="p-3 w-40 text-left">{{ t('employees.name') }}</th>
               <th class="p-3 w-60 text-left">{{ t('employees.email') }}</th>
               <th class="p-3 w-60 text-left">{{ t('employees.position') }}</th>
-              <th class="p-3 w-32 text-center">{{ t('employees.status') }}</th>
+              <!-- <th class="p-3 w-32 text-center">{{ t('employees.status') }}</th> -->
               <th class="p-3 w-40 text-center">{{ t('employees.actions') }}</th>
             </tr>
           </thead>
@@ -87,7 +87,7 @@
                 {{ employee.position }}
               </td>
 
-              <td class="p-3 text-center">
+              <!-- <td class="p-3 text-center">
                 <span
                   class="px-2 py-1 text-sm font-semibold rounded-lg"
                   :class="{
@@ -97,7 +97,7 @@
                 >
                   {{ t(`employees.${employee.status}`) }}
                 </span>
-              </td>
+              </td> -->
               <td class="p-3 flex justify-center gap-3">
                 <NuxtLink
                   :to="`/employees/${employee._id}`"

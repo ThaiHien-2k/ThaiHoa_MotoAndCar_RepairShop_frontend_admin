@@ -108,7 +108,7 @@
      </template>
   <script setup>
   import { ref, computed, onMounted } from 'vue';
-  import useProduct from '@/composables/useProduct';
+  import useProduct from '~/composables/useProduct';
   import { useNotificationStore } from '@/stores/notificationStore';
   import { useI18n } from 'vue-i18n';
   import { useCategory } from '~/composables/useCategory';

@@ -2,30 +2,30 @@
     <div class="p-6 space-y-6">
       <div class="grid grid-cols-4 gap-6">
         <div class="stat-box bg-blue-500 dark:bg-blue-700">
-          <h3>{{ $t('dashboard.revenue') }}</h3>
+          <h3>{{ t('dashboard.revenue') }}</h3>
           <p>${{ stats.revenue.toLocaleString() }}</p>
         </div>
         <div class="stat-box bg-green-500 dark:bg-green-700">
-          <h3>{{ $t('dashboard.orders') }}</h3>
+          <h3>{{ t('dashboard.orders') }}</h3>
           <p>{{ stats.orders }}</p>
         </div>
         <div class="stat-box bg-yellow-500 dark:bg-yellow-700">
-          <h3>{{ $t('dashboard.customers') }}</h3>
+          <h3>{{ t('dashboard.customers') }}</h3>
           <p>{{ stats.customers }}</p>
         </div>
         <div class="stat-box bg-red-500 dark:bg-red-700">
-          <h3>{{ $t('dashboard.products') }}</h3>
+          <h3>{{ t('dashboard.products') }}</h3>
           <p>{{ stats.products }}</p>
         </div>
       </div>
   
       <div class="grid grid-cols-2 gap-6">
         <div class="chart-container border rounded-lg">
-          <h3>{{ $t('dashboard.salesExpenses') }}</h3>
+          <h3>{{ t('dashboard.salesExpenses') }}</h3>
           <Chart type="bar" :data="barChartData" :options="barChartOptions" />
         </div>
         <div class="chart-container  border rounded-lg">
-          <h3>{{ $t('dashboard.popularServices') }}</h3>
+          <h3>{{ t('dashboard.popularServices') }}</h3>
           <div class="mb-4 h-64">
             <Chart type="doughnut" :data="doughnutChartData" :options="doughnutOptions" />
           </div>
@@ -33,13 +33,13 @@
       </div>
   
       <div class="order-table rounded-lg">
-        <h3>{{ $t('dashboard.recentOrders') }}</h3>
+        <h3>{{ t('dashboard.recentOrders') }}</h3>
         <table class="w-full">
           <thead>
             <tr class="border-b">
-              <th class="text-left p-2">{{ $t('dashboard.customers') }}</th>
-              <th class="text-left p-2">{{ $t('dashboard.total') }}</th>
-              <th class="text-left p-2">{{ $t('dashboard.statusName') }}</th>
+              <th class="text-left p-2">{{ t('dashboard.customers') }}</th>
+              <th class="text-left p-2">{{ t('dashboard.total') }}</th>
+              <th class="text-left p-2">{{ t('dashboard.statusName') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -54,7 +54,7 @@
                     'text-red-500': order.status === 'cancelled'
                   }"
                 >
-                  {{ $t(`dashboard.status.${order.status}`) }}
+                  {{ t(`dashboard.status.${order.status}`) }}
                 </span>
               </td>
             </tr>

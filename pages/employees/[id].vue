@@ -1,18 +1,18 @@
 <template>
   <div class="p-6 relative" v-if="employee">
     <div class="relative flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $t('employees.general.employee_details') }}</h1>
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ t('employees.general.employee_details') }}</h1>
       <NuxtLink
         to="/employees"
         class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
       >
-        {{ $t('employees.general.back') }}
+        {{ t('employees.general.back') }}
       </NuxtLink>
     </div>
 
     <section class="space-y-6">
       <div>
-        <h2 class="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-2">{{ $t('employees.info.general') }}</h2>
+        <h2 class="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-2">{{ t('employees.info.general') }}</h2>
         <InfoRow label="employees.info.email" :value="employee.email" />
         <InfoRow label="employees.info.phone" :value="employee.phone" />
         <InfoRow label="employees.info.position" :value="employee.position" />
@@ -21,7 +21,7 @@
       </div>
 
       <div v-if="employee && employee.bank_account">
-        <h2 class="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-2">{{ $t('employees.bank.general') }}</h2>
+        <h2 class="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-2">{{ t('employees.bank.general') }}</h2>
         <InfoRow label="employees.bank.account_name" :value="employee.bank_account.account_name" />
         <InfoRow label="employees.bank.account_number" :value="employee.bank_account.account_number" />
         <InfoRow label="employees.bank.bank_name" :value="employee.bank_account.bank_name" />
@@ -34,12 +34,12 @@
       </div>
 
       <div>
-        <h2 class="text-lg font-semibold text-green-600 dark:text-green-400 mb-2">{{ $t('employees.salary.general') }}</h2>
+        <h2 class="text-lg font-semibold text-green-600 dark:text-green-400 mb-2">{{ t('employees.salary.general') }}</h2>
         <InfoRow label="employees.salary.base_salary" :value="formatCurrency(employee.salary.base_salary)" />
         <InfoRow label="employees.salary.net_salary" :value="formatCurrency(employee.salary.net_salary)" />
 
         <div v-if="employee.salary.allowances.length" class="mt-4">
-          <h3 class="text-sm font-medium text-green-600 dark:text-green-400 mb-2">{{ $t('employees.salary.allowances') }}</h3>
+          <h3 class="text-sm font-medium text-green-600 dark:text-green-400 mb-2">{{ t('employees.salary.allowances') }}</h3>
           <ul class="text-gray-600 dark:text-gray-300 font-medium">
             <li v-for="(item, index) in employee.salary.allowances" :key="index">
               {{ item.type }}: {{ formatCurrency(item.amount) }}
@@ -48,7 +48,7 @@
         </div>
 
         <div v-if="employee.salary.deductions.length" class="mt-4">
-          <h3 class="text-sm font-medium text-green-600 dark:text-green-400 mb-2">{{ $t('employees.salary.deductions') }}</h3>
+          <h3 class="text-sm font-medium text-green-600 dark:text-green-400 mb-2">{{ t('employees.salary.deductions') }}</h3>
           <ul class="text-gray-600 dark:text-gray-300 font-medium">
             <li v-for="(item, index) in employee.salary.deductions" :key="index">
               {{ item.type }}: {{ formatCurrency(item.amount) }}
@@ -60,7 +60,7 @@
   </div>
 
   <div v-else class="p-6">
-    <p class="text-gray-600 dark:text-gray-300">{{ $t('employees.general.loading') }}</p>
+    <p class="text-gray-600 dark:text-gray-300">{{ t('employees.general.loading') }}</p>
   </div>
 </template>
 

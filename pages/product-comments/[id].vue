@@ -1,15 +1,46 @@
 <template>
   <div class="p-6 max-w-xl mx-auto bg-white dark:bg-gray-900 rounded-lg shadow-md" v-if="comment">
-    <h1 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">{{ t('commentDetail.title') }}</h1>
-    <div class="mb-2"><b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.commentId') }}:</b> <span class="text-gray-800 dark:text-gray-100">{{ comment._id }}</span></div>
-    <div class="mb-2"><b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.product') }}:</b> <span class="text-gray-800 dark:text-gray-100">{{ comment.product_id?.name || comment.product_id }}</span></div>
-    <div class="mb-2"><b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.customer') }}:</b> <span class="text-gray-800 dark:text-gray-100">{{ comment.customer_id?.name || comment.customer_id }}</span></div>
-    <div class="mb-2"><b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.rating') }}:</b> <span class="text-yellow-500 font-bold">{{ comment.rating }}</span></div>
-    <div class="mb-2"><b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.content') }}:</b> <span class="text-gray-800 dark:text-gray-100">{{ comment.comment }}</span></div>
+    <!-- Title & Back Button in one row -->
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ t('commentDetail.title') }}</h1>
+      <button
+        @click="goBack"
+        class="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition whitespace-nowrap"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+        </svg>
+        {{ t('common.back') }}
+      </button>
+    </div>
+    <div class="mb-2">
+      <b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.commentId') }}:</b>
+      <span class="ml-2 text-gray-800 dark:text-gray-100">{{ comment._id }}</span>
+    </div>
+    <div class="mb-2">
+      <b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.product') }}:</b>
+      <span class="ml-2 text-gray-800 dark:text-gray-100">{{ comment.productName }}</span>
+    </div>
+    <div class="mb-2">
+      <b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.customer') }}:</b>
+      <span class="ml-2 text-gray-800 dark:text-gray-100">{{ comment.customerName }}</span>
+    </div>
+    <div class="mb-2">
+      <b class="text-gray-700 dark:text-gray-200">Email:</b>
+      <span class="ml-2 text-gray-800 dark:text-gray-100">{{ comment.customerEmail }}</span>
+    </div>
+    <div class="mb-2">
+      <b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.rating') }}:</b>
+      <span class="ml-2 text-yellow-500 font-bold">{{ comment.rating }}</span>
+    </div>
+    <div class="mb-2">
+      <b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.content') }}:</b>
+      <span class="ml-2 text-gray-800 dark:text-gray-100">{{ comment.comment }}</span>
+    </div>
     <div class="mb-2 flex items-center gap-2">
       <b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.status') }}:</b>
       <span
-        class="px-2 py-1 rounded-full text-xs font-semibold"
+        class="ml-2 px-2 py-1 rounded-full text-xs font-semibold"
         :class="{
           'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300': comment.status === 'approved',
           'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300': comment.status === 'pending',
@@ -24,14 +55,22 @@
         }}
       </span>
     </div>
-    <div class="mb-2"><b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.verifiedPurchase') }}:</b>
-      <span :class="comment.isVerifiedPurchase ? 'text-green-600' : 'text-gray-500'">
+    <div class="mb-2">
+      <b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.verifiedPurchase') }}:</b>
+      <span class="ml-2" :class="comment.isVerifiedPurchase ? 'text-green-600 pr-1' : 'text-gray-500 pr-1'">
         {{ comment.isVerifiedPurchase ? t('commentDetail.yes') : t('commentDetail.no') }}
       </span>
     </div>
-    <div class="mb-2"><b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.likes') }}:</b> <span class="text-gray-800 dark:text-gray-100">{{ comment.likes }}</span></div>
-    <div class="mb-2"><b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.createdAt') }}:</b> <span class="text-gray-800 dark:text-gray-100">{{ formatDate(comment.createdAt) }}</span></div>
-    <div class="mb-2"><b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.images') }}:</b>
+    <div class="mb-2">
+      <b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.likes') }}:</b>
+      <span class="ml-2 text-gray-800 dark:text-gray-100">{{ comment.likes }}</span>
+    </div>
+    <div class="mb-2">
+      <b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.createdAt') }}:</b>
+      <span class="ml-2 text-gray-800 dark:text-gray-100">{{ formatDate(comment.createdAt) }}</span>
+    </div>
+    <div class="mb-2">
+      <b class="text-gray-700 dark:text-gray-200">{{ t('commentDetail.images') }}:</b>
       <div class="flex gap-2 mt-1 flex-wrap">
         <template v-if="comment.imageUploads && comment.imageUploads.length">
           <img v-for="img in comment.imageUploads" :key="img" :src="img" class="rounded border border-gray-300 dark:border-gray-700 shadow-sm" style="max-width:100px;max-height:100px;" />
@@ -67,23 +106,41 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import useProductComment from '~/composables/useProductComment'
+import useProduct from '~/composables/useProduct'
+import useAccount from '~/composables/useAccount'
 definePageMeta({ layout: 'admin' });
 
 const { t } = useI18n()
 const { selectedComment, fetchCommentById } = useProductComment()
+const { products, fetchProducts } = useProduct()
+const { accounts, fetchAccounts } = useAccount()
 const route = useRoute()
+const router = useRouter()
 
 const comment = ref(null)
+
 onMounted(async () => {
+  await fetchProducts()
+  await fetchAccounts()
   await fetchCommentById(route.params.id)
-  comment.value = selectedComment.value
+  const c = selectedComment.value
+  comment.value = {
+    ...c,
+    productName: products.value.find(p => p._id === (c.product_id?._id || c.product_id))?.name || c.product_id?.name || '',
+    customerName: accounts.value.find(u => u._id === (c.customer_id?._id || c.customer_id))?.name || c.customer_id?.name || '',
+    customerEmail: accounts.value.find(u => u._id === (c.customer_id?._id || c.customer_id))?.email || c.customer_id?.email || '',
+  }
 })
 
 function formatDate(dateStr) {
   if (!dateStr) return ''
   return new Date(dateStr).toLocaleString('vi-VN')
+}
+
+function goBack() {
+  router.push('/product-comments')
 }
 </script>

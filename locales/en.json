@@ -337,7 +337,11 @@
     "language": "Change Language",
     "sidebar": "Show/Hide Sidebar",
     "show": "Show",
-    "hide": "Hide"
+    "hide": "Hide",
+    "loading": "Loading...",
+    "action": "Action",
+    "detail": "Detail",
+    "back": "Back"
   },
    "productComments": {
     "manageComments": "Manage Product Comments",
@@ -393,5 +397,34 @@
     "noImages": "No images",
     "replies": "Replies",
     "noReplies": "No replies"
+  },
+   "blogComments": {
+    "title": "Blog Comments Management",
+    "filterAuthor": "Filter by Author",
+    "filterContent": "Filter by Content",
+    "placeholderAuthor": "Enter author name",
+    "placeholderContent": "Enter comment content",
+    "id": "Blog ID",
+    "account": "Account",
+    "author": "Author",
+    "content": "Content",
+    "createdAt": "Created At",
+    "noData": "No matching comments found.",
+    "reply": "Reply",
+    "delete": "Delete",
+    "confirmDelete": "Confirm Delete Comment",
+    "confirmDeleteMessage": "Are you sure you want to delete the comment from {name}?",
+    "cancel": "Cancel",
+    "deleteSuccess": "Comment deleted successfully",
+    "deleteFail": "Failed to delete comment",
+    "quickReply": "Quick Reply",
+    "sendReply": "Send Reply",
+    "replySuccess": "Reply sent successfully",
+    "replyFail": "Failed to send reply",
+    "useTemplateReply": "Use template reply",
+    "selectTemplate": "Select a template reply",
+    "template1": "Thank you for your comment!",
+    "template2": "We will contact you for support as soon as possible.",
+    "template3": "Sorry for the inconvenience, we will improve our service."
   }
 }

@@ -1,63 +1,63 @@
 <template>
   <div class="p-6 relative">
     <div class="relative flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $t('employees.createEmployee.title') }}</h1>
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ t('employees.createEmployee.title') }}</h1>
       <NuxtLink
         to="/employees"
         class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
       >
-        {{ $t('employees.createEmployee.backButton') }}
+        {{ t('employees.createEmployee.backButton') }}
       </NuxtLink>
     </div>
 
     <form @submit.prevent="handleCreateEmployee" class="space-y-6">
       <!-- General Information -->
       <section>
-        <h2 class="text-lg font-semibold mb-4 text-blue-600 dark:text-blue-400">{{ $t('employees.createEmployee.generalInfo') }}</h2>
+        <h2 class="text-lg font-semibold mb-4 text-blue-600 dark:text-blue-400">{{ t('employees.createEmployee.generalInfo') }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <label class="text-green-600 dark:text-green-400">{{ $t('employees.createEmployee.name') }}
-            <input v-model="form.name" type="text" :placeholder=" $t('employees.createEmployee.name') " class="input" />
+          <label class="text-green-600 dark:text-green-400">{{ t('employees.createEmployee.name') }}
+            <input v-model="form.name" type="text" :placeholder=" t('employees.createEmployee.name') " class="input" />
           </label>
-          <label class="text-green-600 dark:text-green-400">{{ $t('employees.createEmployee.email') }}
-            <input v-model="form.email" type="email" :placeholder="$t('employees.createEmployee.email')" class="input" />
+          <label class="text-green-600 dark:text-green-400">{{ t('employees.createEmployee.email') }}
+            <input v-model="form.email" type="email" :placeholder="t('employees.createEmployee.email')" class="input" />
           </label>
-          <label class="text-green-600 dark:text-green-400">{{ $t('employees.createEmployee.phone') }}
-            <input v-model="form.phone" type="text" :placeholder="$t('employees.createEmployee.phone')" class="input" />
+          <label class="text-green-600 dark:text-green-400">{{ t('employees.createEmployee.phone') }}
+            <input v-model="form.phone" type="text" :placeholder="t('employees.createEmployee.phone')" class="input" />
           </label>
-          <label class="text-green-600 dark:text-green-400">{{ $t('employees.createEmployee.position') }}
+          <label class="text-green-600 dark:text-green-400">{{ t('employees.createEmployee.position') }}
             <select v-model="form.position" class="input">
-              <option disabled value="">{{ $t('employees.createEmployee.selectPosition') }}</option>
-              <option>{{ $t('employees.createEmployee.employee') }}</option>
-              <option>{{ $t('employees.createEmployee.manager') }}</option>
-              <option>{{ $t('employees.createEmployee.teamLeader') }}</option>
+              <option disabled value="">{{ t('employees.createEmployee.selectPosition') }}</option>
+              <option>{{ t('employees.createEmployee.employee') }}</option>
+              <option>{{ t('employees.createEmployee.manager') }}</option>
+              <option>{{ t('employees.createEmployee.teamLeader') }}</option>
             </select>
           </label>
 
           <label class="text-green-600 dark:text-green-400">
-            {{ $t('employees.createEmployee.contractType') }}
+            {{ t('employees.createEmployee.contractType') }}
             <select v-model="form.employment_type" class="input">
-              <option disabled value="">{{ $t('employees.createEmployee.selectContractType') }}</option>
-              <option value="full_time">{{ $t('employees.createEmployee.fullTime') }}</option>
-              <option value="part_time">{{ $t('employees.createEmployee.partTime') }}</option>
-              <option value="contract">{{ $t('employees.createEmployee.longTermContract') }}</option>
+              <option disabled value="">{{ t('employees.createEmployee.selectContractType') }}</option>
+              <option value="full_time">{{ t('employees.createEmployee.fullTime') }}</option>
+              <option value="part_time">{{ t('employees.createEmployee.partTime') }}</option>
+              <option value="contract">{{ t('employees.createEmployee.longTermContract') }}</option>
             </select>
           </label>
           <label class="text-green-600 dark:text-green-400">
-            {{ $t('employees.createEmployee.startDate') }}
+            {{ t('employees.createEmployee.startDate') }}
             <input v-model="form.hiredDate" type="date" class="input" />
           </label>
         </div>
 
         <!-- Bank Information -->
         <div class="mt-4">
-          <h3 class="font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $t('employees.createEmployee.bankInfo') }}</h3>
-          <input v-model="form.bank_account.account_name" type="text" :placeholder="$t('employees.createEmployee.accountHolder')" class="input" />
-          <input v-model="form.bank_account.account_number" type="text" :placeholder="$t('employees.createEmployee.accountNumber')" class="input" />
-          <input v-model="form.bank_account.bank_name" type="text" :placeholder="$t('employees.createEmployee.bankName')" class="input" />
+          <h3 class="font-medium text-gray-700 dark:text-gray-300 mb-2">{{ t('employees.createEmployee.bankInfo') }}</h3>
+          <input v-model="form.bank_account.account_name" type="text" :placeholder="t('employees.createEmployee.accountHolder')" class="input" />
+          <input v-model="form.bank_account.account_number" type="text" :placeholder="t('employees.createEmployee.accountNumber')" class="input" />
+          <input v-model="form.bank_account.bank_name" type="text" :placeholder="t('employees.createEmployee.bankName')" class="input" />
           <input
             v-model="form.bank_account.expiry_date"
             type="text"
-            :placeholder="$t('employees.createEmployee.expiryDate')"
+            :placeholder="t('employees.createEmployee.expiryDate')"
             maxlength="4"
             class="input"
             @input="validateExpiryDate"
@@ -66,39 +66,39 @@
         
         <!-- Specializations & Certifications -->
         <div class="mt-4">
-          <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('employees.createEmployee.specializations') }}</label>
-          <input v-model="specializationsText" type="text" class="input" :placeholder="$t('employees.createEmployee.specializations')" />
+          <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">{{ t('employees.createEmployee.specializations') }}</label>
+          <input v-model="specializationsText" type="text" class="input" :placeholder="t('employees.createEmployee.specializations')" />
         </div>
 
         <div class="mt-4">
-          <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('employees.createEmployee.certifications') }}</label>
-          <input v-model="certificationsText" type="text" class="input" :placeholder=" $t('employees.createEmployee.certifications')" />
+          <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">{{ t('employees.createEmployee.certifications') }}</label>
+          <input v-model="certificationsText" type="text" class="input" :placeholder=" t('employees.createEmployee.certifications')" />
         </div>
       </section>
 
       <!-- Salary & Earnings -->
       <section>
-        <h2 class="text-lg font-semibold mb-4 text-green-600 dark:text-green-400">{{ $t('employees.createEmployee.salary') }}</h2>
+        <h2 class="text-lg font-semibold mb-4 text-green-600 dark:text-green-400">{{ t('employees.createEmployee.salary') }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input v-model.number="form.salary.base_salary" type="number" :placeholder=" $t('employees.createEmployee.baseSalary') " class="input" @focus="selectOnFocus" @input="calculateNetSalary" />
-          <input :value="form.salary.net_salary" type="number" disabled :placeholder=" $t('employees.createEmployee.netSalary')" class="input bg-gray-100 dark:bg-gray-700 cursor-not-allowed" />
+          <input v-model.number="form.salary.base_salary" type="number" :placeholder=" t('employees.createEmployee.baseSalary') " class="input" @focus="selectOnFocus" @input="calculateNetSalary" />
+          <input :value="form.salary.net_salary" type="number" disabled :placeholder=" t('employees.createEmployee.netSalary')" class="input bg-gray-100 dark:bg-gray-700 cursor-not-allowed" />
         </div>
 
         <!-- Allowances -->
         <div class="mt-4">
-          <h3 class="font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $t('employees.createEmployee.allowances') }}</h3>
+          <h3 class="font-medium text-gray-700 dark:text-gray-300 mb-2">{{ t('employees.createEmployee.allowances') }}</h3>
           <div v-for="(item, index) in form.salary.allowances" :key="index" class="grid grid-cols-3 gap-2 mb-2">
             <select v-model="item.type" class="input">
-              <option disabled value="">{{ $t('employees.createEmployee.selectAllowance') }}</option>
-              <option>{{ $t('employees.createEmployee.meal') }}</option>
-              <option>{{ $t('employees.createEmployee.transport') }}</option>
-              <option>{{ $t('employees.createEmployee.phone') }}</option>
-              <option>{{ $t('employees.createEmployee.other') }}</option>
+              <option disabled value="">{{ t('employees.createEmployee.selectAllowance') }}</option>
+              <option>{{ t('employees.createEmployee.meal') }}</option>
+              <option>{{ t('employees.createEmployee.transport') }}</option>
+              <option>{{ t('employees.createEmployee.phone') }}</option>
+              <option>{{ t('employees.createEmployee.other') }}</option>
             </select>
             <input
               v-if="item.type === 'Khác'"
               v-model="item.type"
-              :placeholder=" $t('employees.createEmployee.allowanceType') "
+              :placeholder=" t('employees.createEmployee.allowanceType') "
               class="input"
             />
             <input
@@ -117,23 +117,23 @@
               @focus="selectOnFocus"
               @input="() => handleManualAmountInput(item)" />
           </div>
-          <button type="button" @click="addAllowance" class="btn-secondary mt-2">{{ $t('employees.createEmployee.addAllowance') }}</button>
+          <button type="button" @click="addAllowance" class="btn-secondary mt-2">{{ t('employees.createEmployee.addAllowance') }}</button>
         </div>
 
         <!-- Deductions -->
         <div class="mt-4">
-          <h3 class="font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $t('employees.createEmployee.deductions') }}</h3>
+          <h3 class="font-medium text-gray-700 dark:text-gray-300 mb-2">{{ t('employees.createEmployee.deductions') }}</h3>
           <div v-for="(item, index) in form.salary.deductions" :key="index" class="grid grid-cols-3 gap-2 mb-2">
             <select v-model="item.type" class="input">
-              <option disabled value="">{{ $t('employees.createEmployee.selectDeduction') }}</option>
-              <option>{{ $t('employees.createEmployee.insurance') }}</option>
-              <option>{{ $t('employees.createEmployee.tax') }}</option>
-              <option>{{ $t('employees.createEmployee.other') }}</option>
+              <option disabled value="">{{ t('employees.createEmployee.selectDeduction') }}</option>
+              <option>{{ t('employees.createEmployee.insurance') }}</option>
+              <option>{{ t('employees.createEmployee.tax') }}</option>
+              <option>{{ t('employees.createEmployee.other') }}</option>
             </select>
             <input
               v-if="item.type === 'Khác'"
               v-model="item.type"
-              placeholder="{{ $t('employees.createEmployee.deductionType') }}"
+              placeholder="{{ t('employees.createEmployee.deductionType') }}"
               class="input"
             />
             <input
@@ -152,11 +152,11 @@
               @focus="selectOnFocus"
               @input="() => handleManualAmountInput(item)" />
           </div>
-          <button type="button" @click="addDeduction" class="btn-secondary mt-2">{{ $t('employees.createEmployee.addDeduction') }}</button>
+          <button type="button" @click="addDeduction" class="btn-secondary mt-2">{{ t('employees.createEmployee.addDeduction') }}</button>
         </div>
       </section>
 
-      <button type="submit" class="btn-primary mt-6">{{ $t('employees.createEmployee.submitButton') }}</button>
+      <button type="submit" class="btn-primary mt-6">{{ t('employees.createEmployee.submitButton') }}</button>
     </form>
   </div>
 </template>

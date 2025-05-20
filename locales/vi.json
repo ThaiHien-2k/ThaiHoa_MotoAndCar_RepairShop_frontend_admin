@@ -336,7 +336,11 @@
     "language": "Thay đổi ngôn ngữ",
     "sidebar": "Hiện/Ẩn thanh sidebar",
     "show": "Hiện",
-    "hide": "Ẩn"
+    "hide": "Ẩn",
+    "loading": "Đang tải...",
+    "action": "Hành động",
+    "detail": "Chi tiết",
+    "back": "Quay lại"
   },
    "productComments": {
     "manageComments": "Quản lý bình luận sản phẩm",
@@ -392,5 +396,35 @@
     "noImages": "Không có ảnh",
     "replies": "Phản hồi",
     "noReplies": "Chưa có phản hồi"
+  },
+  "blogComments": {
+    
+    "title": "Quản lý bình luận blog",
+    "filterAuthor": "Tìm theo tác giả",
+    "filterContent": "Tìm theo nội dung",
+    "placeholderAuthor": "Nhập tên tác giả",
+    "placeholderContent": "Nhập nội dung bình luận",
+    "id": "Blog ID",
+    "account": "Tài khoản",
+    "author": "Tác giả",
+    "content": "Nội dung",
+    "createdAt": "Ngày tạo",
+    "noData": "Không có bình luận nào phù hợp.",
+    "reply": "Trả lời",
+    "delete": "Xóa",
+    "confirmDelete": "Xác nhận xóa bình luận",
+    "confirmDeleteMessage": "Bạn có chắc muốn xóa bình luận của {name}?",
+    "cancel": "Hủy",
+    "deleteSuccess": "Xóa bình luận thành công",
+    "deleteFail": "Xóa bình luận thất bại",
+    "quickReply": "Trả lời nhanh",
+    "sendReply": "Gửi trả lời",
+    "replySuccess": "Trả lời thành công",
+    "replyFail": "Trả lời thất bại",
+    "useTemplateReply": "Sử dụng câu trả lời mẫu",
+    "selectTemplate": "Chọn câu trả lời mẫu",
+    "template1": "Cảm ơn bạn đã bình luận!",
+    "template2": "Chúng tôi sẽ liên hệ hỗ trợ bạn sớm nhất.",
+    "template3": "Xin lỗi vì sự bất tiện, chúng tôi sẽ cải thiện dịch vụ."
   }
 }

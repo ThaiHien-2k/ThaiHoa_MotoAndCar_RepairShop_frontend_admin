@@ -1,0 +1,7 @@
+Order
+Service
+Blog
+repair-appointments
+repair-history
+promotions
+purchase-history
